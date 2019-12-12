@@ -7,16 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA14EE7E23A033EC00E6DBCF /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14EE7D23A033EC00E6DBCF /* CustomButton.swift */; };
+		EA14EE8023A034E500E6DBCF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14EE7F23A034E500E6DBCF /* Constants.swift */; };
 		EA1DE989239FD40400EA6356 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1DE988239FD40400EA6356 /* AppDelegate.swift */; };
 		EA1DE98B239FD40400EA6356 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1DE98A239FD40400EA6356 /* SceneDelegate.swift */; };
 		EA1DE98D239FD40400EA6356 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1DE98C239FD40400EA6356 /* ViewController.swift */; };
 		EA1DE990239FD40400EA6356 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA1DE98E239FD40400EA6356 /* Main.storyboard */; };
 		EA1DE992239FD40500EA6356 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA1DE991239FD40500EA6356 /* Assets.xcassets */; };
 		EA1DE995239FD40500EA6356 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA1DE993239FD40500EA6356 /* LaunchScreen.storyboard */; };
+		EA9E2FA323A1571400876492 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FA223A1571400876492 /* ButtonView.swift */; };
+		EA9E2FA523A15AD600876492 /* PressHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FA423A15AD600876492 /* PressHandler.swift */; };
+		EA9E2FA823A16E7C00876492 /* FirstValueLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FA723A16E7C00876492 /* FirstValueLabel.swift */; };
+		EA9E2FAA23A178A400876492 /* SecondValueLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FA923A178A400876492 /* SecondValueLabel.swift */; };
+		EA9E2FAC23A181A500876492 /* SymbolLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FAB23A181A500876492 /* SymbolLabel.swift */; };
+		EA9E2FAE23A1821700876492 /* SummarySymbolLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FAD23A1821700876492 /* SummarySymbolLabel.swift */; };
+		EA9E2FB023A182A500876492 /* SummaryValueLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FAF23A182A500876492 /* SummaryValueLabel.swift */; };
+		EA9E2FB423A23B0600876492 /* NumbersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FB323A23B0600876492 /* NumbersView.swift */; };
+		EA9E2FB623A23F7E00876492 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FB523A23F7E00876492 /* HistoryView.swift */; };
+		EA9E2FB823A2405900876492 /* HistoryLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FB723A2405900876492 /* HistoryLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		EA1DE985239FD40400EA6356 /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA14EE7D23A033EC00E6DBCF /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		EA14EE7F23A034E500E6DBCF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		EA1DE985239FD40400EA6356 /* Calculator_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA1DE988239FD40400EA6356 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA1DE98A239FD40400EA6356 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		EA1DE98C239FD40400EA6356 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +38,16 @@
 		EA1DE991239FD40500EA6356 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA1DE994239FD40500EA6356 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EA1DE996239FD40500EA6356 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA9E2FA223A1571400876492 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
+		EA9E2FA423A15AD600876492 /* PressHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressHandler.swift; sourceTree = "<group>"; };
+		EA9E2FA723A16E7C00876492 /* FirstValueLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstValueLabel.swift; sourceTree = "<group>"; };
+		EA9E2FA923A178A400876492 /* SecondValueLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondValueLabel.swift; sourceTree = "<group>"; };
+		EA9E2FAB23A181A500876492 /* SymbolLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolLabel.swift; sourceTree = "<group>"; };
+		EA9E2FAD23A1821700876492 /* SummarySymbolLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummarySymbolLabel.swift; sourceTree = "<group>"; };
+		EA9E2FAF23A182A500876492 /* SummaryValueLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryValueLabel.swift; sourceTree = "<group>"; };
+		EA9E2FB323A23B0600876492 /* NumbersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumbersView.swift; sourceTree = "<group>"; };
+		EA9E2FB523A23F7E00876492 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		EA9E2FB723A2405900876492 /* HistoryLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,7 +72,7 @@
 		EA1DE986239FD40400EA6356 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EA1DE985239FD40400EA6356 /* Calculator.app */,
+				EA1DE985239FD40400EA6356 /* Calculator_iOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -56,6 +80,9 @@
 		EA1DE987239FD40400EA6356 /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				EA9E2FB223A23AEE00876492 /* Button */,
+				EA9E2FB123A23AE300876492 /* View */,
+				EA9E2FA623A16E5F00876492 /* Label */,
 				EA1DE988239FD40400EA6356 /* AppDelegate.swift */,
 				EA1DE98A239FD40400EA6356 /* SceneDelegate.swift */,
 				EA1DE98C239FD40400EA6356 /* ViewController.swift */,
@@ -63,8 +90,41 @@
 				EA1DE991239FD40500EA6356 /* Assets.xcassets */,
 				EA1DE993239FD40500EA6356 /* LaunchScreen.storyboard */,
 				EA1DE996239FD40500EA6356 /* Info.plist */,
+				EA14EE7F23A034E500E6DBCF /* Constants.swift */,
+				EA9E2FA423A15AD600876492 /* PressHandler.swift */,
 			);
 			path = Calculator;
+			sourceTree = "<group>";
+		};
+		EA9E2FA623A16E5F00876492 /* Label */ = {
+			isa = PBXGroup;
+			children = (
+				EA9E2FA723A16E7C00876492 /* FirstValueLabel.swift */,
+				EA9E2FA923A178A400876492 /* SecondValueLabel.swift */,
+				EA9E2FAB23A181A500876492 /* SymbolLabel.swift */,
+				EA9E2FAD23A1821700876492 /* SummarySymbolLabel.swift */,
+				EA9E2FAF23A182A500876492 /* SummaryValueLabel.swift */,
+				EA9E2FB723A2405900876492 /* HistoryLabel.swift */,
+			);
+			path = Label;
+			sourceTree = "<group>";
+		};
+		EA9E2FB123A23AE300876492 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EA9E2FA223A1571400876492 /* ButtonView.swift */,
+				EA9E2FB323A23B0600876492 /* NumbersView.swift */,
+				EA9E2FB523A23F7E00876492 /* HistoryView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EA9E2FB223A23AEE00876492 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				EA14EE7D23A033EC00E6DBCF /* CustomButton.swift */,
+			);
+			path = Button;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -84,7 +144,7 @@
 			);
 			name = Calculator;
 			productName = Calculator;
-			productReference = EA1DE985239FD40400EA6356 /* Calculator.app */;
+			productReference = EA1DE985239FD40400EA6356 /* Calculator_iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -138,9 +198,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA14EE8023A034E500E6DBCF /* Constants.swift in Sources */,
+				EA9E2FB423A23B0600876492 /* NumbersView.swift in Sources */,
 				EA1DE98D239FD40400EA6356 /* ViewController.swift in Sources */,
+				EA9E2FA323A1571400876492 /* ButtonView.swift in Sources */,
 				EA1DE989239FD40400EA6356 /* AppDelegate.swift in Sources */,
 				EA1DE98B239FD40400EA6356 /* SceneDelegate.swift in Sources */,
+				EA9E2FB023A182A500876492 /* SummaryValueLabel.swift in Sources */,
+				EA9E2FB623A23F7E00876492 /* HistoryView.swift in Sources */,
+				EA9E2FB823A2405900876492 /* HistoryLabel.swift in Sources */,
+				EA9E2FA823A16E7C00876492 /* FirstValueLabel.swift in Sources */,
+				EA9E2FAC23A181A500876492 /* SymbolLabel.swift in Sources */,
+				EA9E2FA523A15AD600876492 /* PressHandler.swift in Sources */,
+				EA14EE7E23A033EC00E6DBCF /* CustomButton.swift in Sources */,
+				EA9E2FAA23A178A400876492 /* SecondValueLabel.swift in Sources */,
+				EA9E2FAE23A1821700876492 /* SummarySymbolLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,8 +363,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = JS.Calculator;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "JS.Calculator-iOS";
+				PRODUCT_NAME = Calculator_iOS;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -309,8 +381,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = JS.Calculator;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "JS.Calculator-iOS";
+				PRODUCT_NAME = Calculator_iOS;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
