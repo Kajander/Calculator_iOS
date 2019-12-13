@@ -10,32 +10,85 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    static let sharedInstance = ViewController()
-    
     let pressHandler = PressHandler()
-    
     let numbersView = NumbersView()
     let historyView = HistoryView()
+    // Counter is for knowing the ammount of lines in historylabel (max 10 is allowed)
     var counter = Int()
-    var history = String()
-
     let generator = UIImpactFeedbackGenerator(style: .light)
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red:0.17, green:0.24, blue:0.31, alpha:1.0)
-        setupButtons()
+        checkOrientation(frame: view.frame)
+    }
+    
+    func checkOrientation(frame: CGRect) {
+        
+        if frame.height > frame.width {
+            print("Portrait")
+            setupPortraitView()
+            
+        }else{
+            print("Landscape")
+            setupLandscapeView()
+        }
+    }
+    
+    
+    
+    func setupPortraitView() {
+        
+        setupButtons(frame: view.frame)
         
     }
     
-    func setupButtons() {
-        let buttonView = ButtonView(frame: view.frame)
+    
+    func setupLandscapeView() {
+        setupButtons(frame: view.frame)
+    }
+   
+//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        if UIDevice.current.orientation.isLandscape {
+//            print("Landscape")
+//
+//            let joo = view.viewWithTag(10)
+//            joo?.removeFromSuperview()
+//
+//            let test = LandscapeButtonView()
+//            test.translatesAutoresizingMaskIntoConstraints = false
+//            view.addSubview(test)
+//            test.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+//            test.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+//            test.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+//            test.heightAnchor.constraint(equalToConstant: view.frame.width / 3 * 2).isActive = true
+////            var buttonHeight = CGFloat()
+////            var buttonWidth = CGFloat()
+////            var fullHeigth = CGFloat()
+////            let bottomConstant = CGFloat(25)
+////            let cornerRadius = CGFloat(5)
+////            let padding = CGFloat(4.0)
+////            var width: CGFloat
+//
+//        } else {
+//            print("Portrait")
+//        }
+//    }
+    
+//    func changeTest() {
+//        setupButtons(frame: view.frame)
+//
+//    }
+
+    func setupButtons(frame: CGRect) {
+        
+        let buttonView = PortraitButtonView(frame: frame)
         buttonView.tag = 10
         buttonView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(buttonView)
-        buttonView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        buttonView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        buttonView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        buttonView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        buttonView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        buttonView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         buttonView.heightAnchor.constraint(equalToConstant: buttonView.fullHeigth).isActive = true
         
         for view in buttonView.subviews {
@@ -107,7 +160,6 @@ class ViewController: UIViewController {
         numbersView.secondValueLabel.text = ""
         numbersView.symbolLabel.text = ""
         historyView.historyLabel.text = ""
-        history = ""
         counter = 0
     }
     
@@ -116,24 +168,22 @@ class ViewController: UIViewController {
     @objc func upArrowPressed(sender: UIButton) {
         generator.impactOccurred()
 
-        let operatorSymbol = numbersView.symbolLabel.text!
+        let symbol = numbersView.symbolLabel.text!
         let currentText = numbersView.firstValueLabel.text!
         
-        if operatorSymbol != "", currentText != "0", counter < 11 {
-            let firstText = numbersView.secondValueLabel.text!
-            let secondText = numbersView.firstValueLabel.text!
-            let summaryText = numbersView.summaryValueLabel.text!
-            let temp1 = firstText + " " + operatorSymbol + " " + secondText
-            let temp2 = " = " + summaryText
-            let historyText = temp1 + temp2
+        if symbol != "", currentText != "0", counter < 11 {
             
-            historyView.historyLabel.text = history + "\n" + historyText
+            let secondText = numbersView.secondValueLabel.text!
+            let summaryText = numbersView.summaryValueLabel.text!
+            let historyText = historyView.historyLabel.text!
+            let newLine = currentText + " " + symbol + " " + secondText + " = " + summaryText
+            
+            historyView.historyLabel.text = historyText + "\n" + newLine
 
             numbersView.summaryValueLabel.text = ""
             numbersView.firstValueLabel.text = "0"
             numbersView.secondValueLabel.text = ""
             numbersView.symbolLabel.text = ""
-            history = history + "\n" + historyText
             
             let bView = view.viewWithTag(1)
             bView?.viewWithTag(1)?.backgroundColor = Colors.redColor.withAlphaComponent(0.5)
@@ -214,8 +264,8 @@ class ViewController: UIViewController {
         numbersView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(numbersView)
         
-        numbersView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive  = true
-        numbersView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        numbersView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive  = true
+        numbersView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         numbersView.bottomAnchor.constraint(equalTo: view.topAnchor, constant: -5).isActive = true
         numbersView.topAnchor.constraint(equalTo: numbersView.secondValueLabel.topAnchor).isActive = true
 
@@ -228,9 +278,9 @@ class ViewController: UIViewController {
         historyView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(historyView)
         
-        historyView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        historyView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive  = true
-        historyView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        historyView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        historyView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive  = true
+        historyView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         historyView.bottomAnchor.constraint(equalTo: numbersView.topAnchor, constant: -5).isActive = true
     }
     

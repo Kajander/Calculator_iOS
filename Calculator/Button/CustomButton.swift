@@ -12,11 +12,15 @@ class CustomButton: UIButton {
     
     var title: String
     var color: UIColor
+    var width: CGFloat
+    var height: CGFloat
     let cornerRadius = CGFloat(5)
     
-    init(frame: CGRect, title: String, color: UIColor) {
+    init(frame: CGRect, title: String, color: UIColor, width: CGFloat, height: CGFloat) {
         self.title = title
         self.color = color
+        self.width = width
+        self.height = height
         
         super.init(frame: frame)
         setupButton()
@@ -27,13 +31,15 @@ class CustomButton: UIButton {
     }
     
     func setupButton() {
-        
         setTitle(title, for: .normal)
         setTitleColor(.black, for: .normal)
         titleLabel?.font = UIFont.boldSystemFont(ofSize: 32)
         backgroundColor = color
         layer.cornerRadius = cornerRadius
-        
+        translatesAutoresizingMaskIntoConstraints = false
+        widthAnchor.constraint(equalToConstant: width).isActive = true
+        heightAnchor.constraint(equalToConstant: height).isActive = true
+      
     }
     
     

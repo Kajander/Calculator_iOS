@@ -17,6 +17,9 @@ struct Colors {
     static let greenColor = UIColor(red:0.38, green:0.61, blue:0.54, alpha:1.0)
 }
 
+struct ButtonTites {
+    static let portraitButtonTitles = ["0", "1" ,"2" ,"3" ,"4" ,"5" ,"6" ,"7" ,"8" ,"9" ,"↥", ".", "+", "-", "x", "÷", "÷", "C", "AC"]
+    // More coming
+    static let landscapeButtonTitles = ["0", "1" ,"2" ,"3" ,"4" ,"5" ,"6" ,"7" ,"8" ,"9" ,"↥", ".", "+", "-", "x", "÷", "÷", "C", "AC"]
 
-
-
+}

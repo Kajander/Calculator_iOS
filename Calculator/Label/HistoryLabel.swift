@@ -22,6 +22,7 @@ class HistoryLabel: UILabel {
     
     func setupLabel() {
         
+        text = ""
         numberOfLines = 10
         textAlignment = .right
         textColor = .lightGray
