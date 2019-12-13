@@ -18,8 +18,8 @@ struct Colors {
 }
 
 struct ButtonTites {
-    static let portraitButtonTitles = ["0", "1" ,"2" ,"3" ,"4" ,"5" ,"6" ,"7" ,"8" ,"9" ,"+/-", "↥" , ".", "+", "-", "x", "÷", "÷", "↤", "C", "AC"]
+    static let portraitButtonTitles = ["0", "1" ,"2" ,"3" ,"4" ,"5" ,"6" ,"7" ,"8" ,"9" ,"-/+", "↥" , ".", "+", "-", "x", "÷", "÷", "⇥", "C", "AC"]
     // More coming
-    static let landscapeButtonTitles = ["0", "1" ,"2" ,"3" ,"4" ,"5" ,"6" ,"7" ,"8" ,"9" ,"↥", ".", "+", "-", "x", "÷", "÷", "↤", "C", "AC"]
+    static let landscapeButtonTitles = ["x²", "a{2}"]
 
 }

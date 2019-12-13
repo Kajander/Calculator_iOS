@@ -36,7 +36,7 @@ class PressHandler: NSObject {
         }
         return (summary: summary, firstString: firstString)
     }
-    
+
     func calculate(symbol: String, currentText: String, secondText: String) -> String {
         var summary = Double()
         var stringSummary = String()
@@ -45,16 +45,16 @@ class PressHandler: NSObject {
         
         
         if symbol == "+" {
-            summary = firstValue + secondValue
+            summary = secondValue + firstValue
         }
         if symbol == "-" {
-            summary = firstValue - secondValue
+            summary = secondValue - firstValue
         }
         if symbol == "x" {
-            summary = firstValue * secondValue
+            summary = secondValue * firstValue
         }
         if symbol == "÷" {
-            summary = firstValue / secondValue
+            summary = secondValue / firstValue
         }
         
         let isInt = floor(summary) == summary
@@ -105,7 +105,12 @@ class PressHandler: NSObject {
         var summary = String()
         var firstString = String()
         
-        if !currentText.contains(".0") {
+        if currentText == "-0" {
+            firstString = String(currentText.dropLast(1)) + buttonPressed
+            if secondText != "" {
+                summary = calculate(symbol: symbol, currentText: firstString, secondText: secondText)
+            }
+        }else if !currentText.contains(".0") {
             
             if currentText != "0" {
                 firstString = currentText + buttonPressed

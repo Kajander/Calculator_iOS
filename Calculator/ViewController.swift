@@ -19,18 +19,16 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red:0.17, green:0.24, blue:0.31, alpha:1.0)
+        view.backgroundColor = Colors.backgroundColor
         checkOrientation(frame: view.frame)
     }
     
     func checkOrientation(frame: CGRect) {
         
         if frame.height > frame.width {
-            print("Portrait")
             setupPortraitView()
             
         }else{
-            print("Landscape")
             setupLandscapeView()
         }
     }
@@ -100,22 +98,29 @@ class ViewController: UIViewController {
             }else{
                 if title == "." {
                     button.addTarget(self, action: #selector(commaPressed(sender:)), for: .touchUpInside)
+                    button.tag = 2
                 }
                 if title == "↥" {
                     button.tag = 1
                     button.addTarget(self, action: #selector(upArrowPressed(sender:)), for: .touchUpInside)
                 }
-                if title == "↤" {
+                if title == "⇥" {
+                    button.tag = 3
                     button.addTarget(self, action: #selector(removeNumber(sender:)), for: .touchUpInside)
                 }
                 if title == "+" || title == "-" || title == "x" || title == "÷" {
                     button.addTarget(self, action: #selector(symbolPressed(sender:)), for: .touchUpInside)
                 }
                 if title == "C" {
+                    button.tag = 4
                     button.addTarget(self, action: #selector(cancelPressed(sender:)), for: .touchUpInside)
                 }
                 if title == "AC" {
+                    button.tag = 5
                     button.addTarget(self, action: #selector(cancelAllPressed(sender:)), for: .touchUpInside)
+                }
+                if title == "-/+" {
+                    button.addTarget(self, action: #selector(negativePositivePressed(sender:)), for: .touchUpInside)
                 }
             }
         }
@@ -128,39 +133,103 @@ class ViewController: UIViewController {
     
     //MARK: Remove number
     @objc func removeNumber(sender: UIButton) {
-        generator.impactOccurred()
-
+        
         let currentText = numbersView.firstValueLabel.text!
         let secondText = numbersView.secondValueLabel.text!
         let symbol = numbersView.symbolLabel.text!
         
-        let (summary, firstString) = pressHandler.handleRemoveButton(currentText: currentText, secondText: secondText, symbol: symbol)
-        numbersView.summaryValueLabel.text = summary
-        numbersView.firstValueLabel.text = firstString
+        if currentText != "0" {
+            generator.impactOccurred()
+            #warning("this calculates stuff, should not do that if secontext is empty ")
+            let (summary, firstString) = pressHandler.handleRemoveButton(currentText: currentText, secondText: secondText, symbol: symbol)
+            //jos second tyhjä nii äläl laske / aseta
+            //        numbersView.summaryValueLabel.text = summary
+            numbersView.firstValueLabel.text = firstString
+            
+            if firstString == "0" {
+                let bView = view.viewWithTag(3)
+                bView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
+                if numbersView.secondValueLabel.text! != "" {
+                    let bView = view.viewWithTag(1)
+                    bView?.backgroundColor = Colors.redColor.withAlphaComponent(0.5)
+                }
+            }
+            
+            if firstString == "0", secondText == ""  {
+                let cView = view.viewWithTag(4)
+                cView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
+            }
+
+            if !firstString.contains(".") {
+                let bView = view.viewWithTag(2)
+                bView?.backgroundColor = Colors.whiteColor.withAlphaComponent(1)
+            }
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
         
     }
     
     //MARK: CancelPressed
     @objc func cancelPressed(sender: UIButton) {
-        generator.impactOccurred()
+        let currentText = numbersView.firstValueLabel.text!
+        let secondText = numbersView.secondValueLabel.text!
+        
+        if currentText != "0" || secondText != "" {
+            generator.impactOccurred()
 
-        numbersView.summaryValueLabel.text = ""
-        numbersView.firstValueLabel.text = "0"
-        numbersView.secondValueLabel.text = ""
-        numbersView.symbolLabel.text = ""
+            numbersView.summaryValueLabel.text = ""
+            numbersView.firstValueLabel.text = "0"
+            numbersView.secondValueLabel.text = ""
+            numbersView.symbolLabel.text = ""
+            
+            if numbersView.secondValueLabel.text! == "" {
+                let bView = view.viewWithTag(1)
+                bView?.backgroundColor = Colors.redColor.withAlphaComponent(0.5)
+                let dView = view.viewWithTag(3)
+                dView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
+                let cView = view.viewWithTag(4)
+                cView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
+                let gView = view.viewWithTag(2)
+                gView?.backgroundColor = Colors.whiteColor.withAlphaComponent(1)
+            }
+        }
         
     }
     
     //MARK: CancelAllPressed
     @objc func cancelAllPressed(sender: UIButton) {
-        generator.impactOccurred()
         
-        numbersView.summaryValueLabel.text = ""
-        numbersView.firstValueLabel.text = "0"
-        numbersView.secondValueLabel.text = ""
-        numbersView.symbolLabel.text = ""
-        historyView.historyLabel.text = ""
-        counter = 0
+        if historyView.historyLabel.text != ""{
+            generator.impactOccurred()
+
+            numbersView.summaryValueLabel.text = ""
+            numbersView.firstValueLabel.text = "0"
+            numbersView.secondValueLabel.text = ""
+            numbersView.symbolLabel.text = ""
+            historyView.historyLabel.text = ""
+            counter = 0
+            
+            if numbersView.secondValueLabel.text! == "" {
+                let bView = view.viewWithTag(1)
+                bView?.backgroundColor = Colors.redColor.withAlphaComponent(0.5)
+                let cView = view.viewWithTag(4)
+                cView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
+                let dView = view.viewWithTag(3)
+                dView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
+                let gView = view.viewWithTag(5)
+                gView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
+                
+            }
+        }
+        
     }
     
     
@@ -186,22 +255,46 @@ class ViewController: UIViewController {
             numbersView.symbolLabel.text = ""
             
             let bView = view.viewWithTag(1)
-            bView?.viewWithTag(1)?.backgroundColor = Colors.redColor.withAlphaComponent(0.5)
+            bView?.backgroundColor = Colors.redColor.withAlphaComponent(0.5)
+            let gView = view.viewWithTag(5)
+            gView?.backgroundColor = Colors.purpleColor.withAlphaComponent(1)
+            let dView = view.viewWithTag(3)
+            dView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
+            let cView = view.viewWithTag(4)
+            cView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
+
             counter += 1
         }
         
         
     }
     
+    @objc func negativePositivePressed(sender: UIButton) {
+        
+        let currentText = numbersView.firstValueLabel.text!
+        
+        if currentText.contains("-") {
+            numbersView.firstValueLabel.text = String(currentText.dropFirst())
+        }else{
+            numbersView.firstValueLabel.text = "-" + currentText
+
+        }
+        
+    }
+    
+    
     //MARK: CommaPressed
     @objc func commaPressed(sender: UIButton) {
-        generator.impactOccurred()
 
         let currentText = numbersView.firstValueLabel.text!
         
         if !currentText.contains(".") {
+            generator.impactOccurred()
             let newText = currentText + ".0"
             numbersView.firstValueLabel.text! = newText
+            
+            let bView = view.viewWithTag(2)
+            bView?.backgroundColor = Colors.whiteColor.withAlphaComponent(0.5)
         }
         
     }
@@ -210,27 +303,23 @@ class ViewController: UIViewController {
     @objc func symbolPressed(sender: UIButton) {
         generator.impactOccurred()
         
-        if numbersView.firstValueLabel.text! != "0" {
-            if numbersView.symbolLabel.text! == "" {
-                
-                let currentSymbol = sender.currentTitle!
-                
-                numbersView.secondValueLabel.text = numbersView.firstValueLabel.text!
-                numbersView.firstValueLabel.text! = "0"
-                
-                if currentSymbol == "+" {
-                    numbersView.symbolLabel.text = "+"
-                }
-                if currentSymbol == "-" {
-                    numbersView.symbolLabel.text = "-"
-                }
-                if currentSymbol == "x" {
-                    numbersView.symbolLabel.text = "x"
-                }
-                if currentSymbol == "÷" {
-                    numbersView.symbolLabel.text = "÷"
-                }
-            }
+        let currentText = numbersView.firstValueLabel.text!
+        let secondText = numbersView.secondValueLabel.text!
+        let symbol = numbersView.symbolLabel.text!
+        
+        if symbol != "", currentText != "0" {
+            
+            numbersView.symbolLabel.text = sender.currentTitle!
+            numbersView.summaryValueLabel.text = pressHandler.calculate(symbol: sender.currentTitle!, currentText: currentText, secondText: secondText)
+            
+        }else if currentText != "0" {
+            
+            numbersView.symbolLabel.text = sender.currentTitle!
+            numbersView.secondValueLabel.text = numbersView.firstValueLabel.text!
+            numbersView.firstValueLabel.text! = "0"
+            
+            let bView = view.viewWithTag(3)
+            bView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
         }
     }
     
@@ -250,15 +339,19 @@ class ViewController: UIViewController {
                 let bView = view.viewWithTag(1)
                 bView?.viewWithTag(1)?.backgroundColor = Colors.redColor.withAlphaComponent(1)
             }
+            if numbersView.firstValueLabel.text != "0" {
+                let bView = view.viewWithTag(3)
+                bView?.backgroundColor = Colors.purpleColor.withAlphaComponent(1)
+                let cView = view.viewWithTag(4)
+                cView?.backgroundColor = Colors.purpleColor.withAlphaComponent(1)
+
+            }
         }
         
     }
     
     //MARK:- Setup
-//16 017
-    
-    
-    
+
     
     func setupNumbersView(view: UIView) {
         numbersView.translatesAutoresizingMaskIntoConstraints = false

@@ -16,7 +16,7 @@ class PortraitButtonView: UIView {
     var fullHeigth = CGFloat()
     var btnTrailConst = CGFloat()
     var btnBottConst = CGFloat()
-    
+    var fontSize = CGFloat(0)
     var cornerRadius = CGFloat(5)
     var padding = CGFloat(4.0)
     var width: CGFloat
@@ -40,24 +40,34 @@ class PortraitButtonView: UIView {
         if frame.height > frame.width {
             buttonHeight = (width / 5 - (2 * padding)) / 1.5
             buttonWidth = width / 4 - (1.2 * padding)
-            // This should be done better
+            // This should be more clear
             btnTrailConst = -(buttonWidth + 2 * padding)
             btnBottConst = -(buttonHeight + padding)
+            fontSize = 32
+            createBasicButtons()
             
         }else{
             buttonHeight = height / 10
             buttonWidth = (width / 2) / 8
             btnTrailConst = -(buttonWidth + 2 * padding)
             btnBottConst = -(buttonHeight + padding)
+            fontSize = 22
+            createBasicButtons()
+            //createScientificButtons
         }
         
+        
+        
+        fullHeigth = 5 * buttonHeight + bottomConstant + (5 * padding)
+    }
+    
+    func createBasicButtons() {
+        
         for title in ButtonTites.portraitButtonTitles {
-            
             if title.isInt {
                 let intTitle = Int(title)
-                let button = CustomButton(frame: CGRect.zero, title: title, color: Colors.whiteColor, width: buttonWidth, height: buttonHeight)
+                let button = CustomButton(frame: CGRect.zero, title: title, fontSize: fontSize, color: Colors.whiteColor, width: buttonWidth, height: buttonHeight)
                 addSubview(button)
-                
                 switch intTitle {
                 case 0:
                     button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 3 * btnTrailConst + 2 * padding).isActive = true
@@ -94,13 +104,14 @@ class PortraitButtonView: UIView {
                 }
                 
             }else{
-                let button = CustomButton(frame: CGRect.zero, title: title, color: Colors.whiteColor, width: buttonWidth, height: buttonHeight)
+                
+                let button = CustomButton(frame: CGRect.zero, title: title, fontSize: fontSize, color: Colors.whiteColor, width: buttonWidth, height: buttonHeight)
                 addSubview(button)
                 switch title {
-                case "+/-":
-                button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: btnTrailConst).isActive = true
-                button.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-                button.backgroundColor = Colors.redColor
+                case "-/+":
+                    button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: btnTrailConst).isActive = true
+                    button.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+                    button.backgroundColor = Colors.redColor.withAlphaComponent(1)
                 case "↥":
                     button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding).isActive = true
                     button.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
@@ -124,25 +135,24 @@ class PortraitButtonView: UIView {
                     button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding).isActive = true
                     button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 4 * btnBottConst).isActive = true
                     button.backgroundColor = Colors.greenColor
-                case "↤":
+                case "⇥":
                     button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: btnTrailConst).isActive = true
                     button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 4 * btnBottConst).isActive = true
-                    button.backgroundColor = Colors.purpleColor
+                    button.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
                 case "C":
                     button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 2 * btnTrailConst + padding).isActive = true
                     button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 4 * btnBottConst).isActive = true
-                    button.backgroundColor = Colors.purpleColor
+                    button.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
                 case "AC":
                     button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 3 * btnTrailConst + 2 * padding).isActive = true
                     button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 4 * btnBottConst).isActive = true
-                    button.backgroundColor = Colors.purpleColor
+                    button.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
                 default:
                     print("More problems :S")
                 }
             }
+            
         }
-        
-        fullHeigth = 5 * buttonHeight + bottomConstant + (5 * padding)
     }
     
     /*
