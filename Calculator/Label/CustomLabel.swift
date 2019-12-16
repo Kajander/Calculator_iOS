@@ -1,19 +1,25 @@
 //
-//  SecondValueLabel.swift
+//  CustomLabel.swift
 //  Calculator
 //
-//  Created by Joakim Kajan on 11.12.2019.
+//  Created by Joakim Kajan on 14.12.2019.
 //  Copyright © 2019 JapeSoft. All rights reserved.
 //
 
 import UIKit
 
-class SecondValueLabel: UILabel {
-
-    var value: String
+class CustomLabel: UILabel {
     
-    init(frame: CGRect, value: String) {
+    var value: String
+    var fontSize: CGFloat
+    var color: UIColor
+    var numOfLines: Int
+    
+    init(frame: CGRect, value: String, fontSize: CGFloat, textColor: UIColor, numOfLines: Int) {
         self.value = value
+        self.fontSize = fontSize
+        self.color = textColor
+        self.numOfLines = numOfLines
         super.init(frame: frame)
         setupLabel()
     }
@@ -24,12 +30,14 @@ class SecondValueLabel: UILabel {
     
     func setupLabel() {
         
-        text = value
+        font = UIFont.boldSystemFont(ofSize: fontSize)
         textAlignment = .right
-        textColor = .white
-        font = UIFont.boldSystemFont(ofSize: 48)
+        textColor = color
+        numberOfLines = numOfLines
+        translatesAutoresizingMaskIntoConstraints = false
+        
     }
-    
+
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

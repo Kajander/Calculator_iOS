@@ -11,7 +11,6 @@ import UIKit
 class ViewController: UIViewController {
     
     let pressHandler = PressHandler()
-    let numbersView = NumbersView()
     let historyView = HistoryView()
     // Counter is for knowing the ammount of lines in historylabel (max 10 is allowed)
     var counter = Int()
@@ -36,7 +35,6 @@ class ViewController: UIViewController {
     
     
     func setupPortraitView() {
-        
         setupButtons(frame: view.frame)
         
     }
@@ -80,7 +78,7 @@ class ViewController: UIViewController {
 
     func setupButtons(frame: CGRect) {
         
-        let buttonView = PortraitButtonView(frame: frame)
+        let buttonView = ButtonView(frame: frame)
         buttonView.tag = 10
         buttonView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(buttonView)
@@ -96,285 +94,299 @@ class ViewController: UIViewController {
             if title.isInt == true {
                 button.addTarget(self, action: #selector(numberPressed(sender:)), for: .touchUpInside)
             }else{
+                
                 if title == "." {
                     button.addTarget(self, action: #selector(commaPressed(sender:)), for: .touchUpInside)
-                    button.tag = 2
-                }
-                if title == "↥" {
-                    button.tag = 1
+                }else if title == "↥" {
                     button.addTarget(self, action: #selector(upArrowPressed(sender:)), for: .touchUpInside)
-                }
-                if title == "⇥" {
-                    button.tag = 3
+                }else if title == "⇥" {
                     button.addTarget(self, action: #selector(removeNumber(sender:)), for: .touchUpInside)
-                }
-                if title == "+" || title == "-" || title == "x" || title == "÷" {
+                }else if title == "+" || title == "-" || title == "x" || title == "÷" {
                     button.addTarget(self, action: #selector(symbolPressed(sender:)), for: .touchUpInside)
-                }
-                if title == "C" {
-                    button.tag = 4
+                }else if title == "C" {
                     button.addTarget(self, action: #selector(cancelPressed(sender:)), for: .touchUpInside)
-                }
-                if title == "AC" {
-                    button.tag = 5
+                }else if title == "AC" {
                     button.addTarget(self, action: #selector(cancelAllPressed(sender:)), for: .touchUpInside)
-                }
-                if title == "-/+" {
+                }else if title == "-/+" {
                     button.addTarget(self, action: #selector(negativePositivePressed(sender:)), for: .touchUpInside)
                 }
             }
         }
         
-        setupNumbersView(view: buttonView)
+        setupNumbersView(buttonView: buttonView)
         
     }
-    
     
     
     //MARK: Remove number
     @objc func removeNumber(sender: UIButton) {
+
+        let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
+        let currentText = firstNumberLabel.text!
+        let secondNumberLabel = view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
+        let secondText = secondNumberLabel.text!
+        let symbolLabel = view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
+        let symbol = symbolLabel.text!
         
-        let currentText = numbersView.firstValueLabel.text!
-        let secondText = numbersView.secondValueLabel.text!
-        let symbol = numbersView.symbolLabel.text!
-        
+        let summaryValueLabel = view.viewWithTag(LabelTags.summaryValueLabelTag) as! UILabel
+
         if currentText != "0" {
             generator.impactOccurred()
-            #warning("this calculates stuff, should not do that if secontext is empty ")
+
             let (summary, firstString) = pressHandler.handleRemoveButton(currentText: currentText, secondText: secondText, symbol: symbol)
-            //jos second tyhjä nii äläl laske / aseta
-            //        numbersView.summaryValueLabel.text = summary
-            numbersView.firstValueLabel.text = firstString
+            if secondText != ""{
+                summaryValueLabel.text = summary
+            }
+            firstNumberLabel.text = firstString
             
             if firstString == "0" {
-                let bView = view.viewWithTag(3)
-                bView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
-                if numbersView.secondValueLabel.text! != "" {
-                    let bView = view.viewWithTag(1)
-                    bView?.backgroundColor = Colors.redColor.withAlphaComponent(0.5)
+                    deactivateButton(tag: ButtonTags.rightArrowButtonTag)
+                if secondText != "" {
+                    deactivateButton(tag: ButtonTags.upArrowButtonTag)
+                }else{
+                    deactivateButton(tag: ButtonTags.cancelButtonTag)
                 }
-            }
-            
-            if firstString == "0", secondText == ""  {
-                let cView = view.viewWithTag(4)
-                cView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
             }
 
             if !firstString.contains(".") {
-                let bView = view.viewWithTag(2)
-                bView?.backgroundColor = Colors.whiteColor.withAlphaComponent(1)
+                activateButton(tag: ButtonTags.dotButtonTag)
             }
-            
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
     }
     
     //MARK: CancelPressed
     @objc func cancelPressed(sender: UIButton) {
-        let currentText = numbersView.firstValueLabel.text!
-        let secondText = numbersView.secondValueLabel.text!
-        
-        if currentText != "0" || secondText != "" {
-            generator.impactOccurred()
+        generator.impactOccurred()
 
-            numbersView.summaryValueLabel.text = ""
-            numbersView.firstValueLabel.text = "0"
-            numbersView.secondValueLabel.text = ""
-            numbersView.symbolLabel.text = ""
-            
-            if numbersView.secondValueLabel.text! == "" {
-                let bView = view.viewWithTag(1)
-                bView?.backgroundColor = Colors.redColor.withAlphaComponent(0.5)
-                let dView = view.viewWithTag(3)
-                dView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
-                let cView = view.viewWithTag(4)
-                cView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
-                let gView = view.viewWithTag(2)
-                gView?.backgroundColor = Colors.whiteColor.withAlphaComponent(1)
-            }
-        }
+        resetLabels(resetAll: false)
         
+        deactivateButton(tag: ButtonTags.upArrowButtonTag)
+        deactivateButton(tag: ButtonTags.rightArrowButtonTag)
+        deactivateButton(tag: ButtonTags.cancelButtonTag)
+        activateButton(tag: ButtonTags.dotButtonTag)
+
+
     }
     
     //MARK: CancelAllPressed
     @objc func cancelAllPressed(sender: UIButton) {
-        
-        if historyView.historyLabel.text != ""{
-            generator.impactOccurred()
+        generator.impactOccurred()
 
-            numbersView.summaryValueLabel.text = ""
-            numbersView.firstValueLabel.text = "0"
-            numbersView.secondValueLabel.text = ""
-            numbersView.symbolLabel.text = ""
-            historyView.historyLabel.text = ""
-            counter = 0
-            
-            if numbersView.secondValueLabel.text! == "" {
-                let bView = view.viewWithTag(1)
-                bView?.backgroundColor = Colors.redColor.withAlphaComponent(0.5)
-                let cView = view.viewWithTag(4)
-                cView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
-                let dView = view.viewWithTag(3)
-                dView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
-                let gView = view.viewWithTag(5)
-                gView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
-                
-            }
-        }
-        
+        resetLabels(resetAll: true)
+        historyView.historyLabel.text = ""
+        counter = 0
+
+        deactivateButton(tag: ButtonTags.upArrowButtonTag)
+        deactivateButton(tag: ButtonTags.rightArrowButtonTag)
+        deactivateButton(tag: ButtonTags.cancelButtonTag)
+        deactivateButton(tag: ButtonTags.cancelAllButtonTag)
+
     }
     
     
     //MARK: UpArrowPressed
     @objc func upArrowPressed(sender: UIButton) {
         generator.impactOccurred()
-
-        let symbol = numbersView.symbolLabel.text!
-        let currentText = numbersView.firstValueLabel.text!
         
-        if symbol != "", currentText != "0", counter < 11 {
-            
-            let secondText = numbersView.secondValueLabel.text!
-            let summaryText = numbersView.summaryValueLabel.text!
-            let historyText = historyView.historyLabel.text!
-            let newLine = currentText + " " + symbol + " " + secondText + " = " + summaryText
-            
-            historyView.historyLabel.text = historyText + "\n" + newLine
-
-            numbersView.summaryValueLabel.text = ""
-            numbersView.firstValueLabel.text = "0"
-            numbersView.secondValueLabel.text = ""
-            numbersView.symbolLabel.text = ""
-            
-            let bView = view.viewWithTag(1)
-            bView?.backgroundColor = Colors.redColor.withAlphaComponent(0.5)
-            let gView = view.viewWithTag(5)
-            gView?.backgroundColor = Colors.purpleColor.withAlphaComponent(1)
-            let dView = view.viewWithTag(3)
-            dView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
-            let cView = view.viewWithTag(4)
-            cView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
-
-            counter += 1
-        }
+        pushToHistory()
         
-        
+        deactivateButton(tag: ButtonTags.upArrowButtonTag)
+        deactivateButton(tag: ButtonTags.rightArrowButtonTag)
+        deactivateButton(tag: ButtonTags.cancelButtonTag)
+        activateButton(tag: ButtonTags.cancelAllButtonTag)
+            
     }
+
     
+    //MARK: Negative Positive change
     @objc func negativePositivePressed(sender: UIButton) {
-        
-        let currentText = numbersView.firstValueLabel.text!
-        
+        generator.impactOccurred()
+
+        let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
+        let currentText = firstNumberLabel.text!
+
         if currentText.contains("-") {
-            numbersView.firstValueLabel.text = String(currentText.dropFirst())
+            firstNumberLabel.text = String(currentText.dropFirst())
         }else{
-            numbersView.firstValueLabel.text = "-" + currentText
+            firstNumberLabel.text = "-" + currentText
 
         }
-        
+
     }
     
     
     //MARK: CommaPressed
     @objc func commaPressed(sender: UIButton) {
+        generator.impactOccurred()
 
-        let currentText = numbersView.firstValueLabel.text!
-        
+        let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
+        let currentText = firstNumberLabel.text!
+
         if !currentText.contains(".") {
-            generator.impactOccurred()
             let newText = currentText + ".0"
-            numbersView.firstValueLabel.text! = newText
-            
-            let bView = view.viewWithTag(2)
-            bView?.backgroundColor = Colors.whiteColor.withAlphaComponent(0.5)
+            firstNumberLabel.text! = newText
+
+            deactivateButton(tag: ButtonTags.dotButtonTag)
         }
-        
+
     }
     
     //MARK: SymbolPressed
     @objc func symbolPressed(sender: UIButton) {
         generator.impactOccurred()
-        
-        let currentText = numbersView.firstValueLabel.text!
-        let secondText = numbersView.secondValueLabel.text!
-        let symbol = numbersView.symbolLabel.text!
+
+        let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
+        let currentText = firstNumberLabel.text!
+        let secondNumberLabel = view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
+        let secondText = secondNumberLabel.text!
+        let symbolLabel = view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
+        let symbol = symbolLabel.text!
+        let summaryLabel = view.viewWithTag(LabelTags.summaryValueLabelTag) as! UILabel
         
         if symbol != "", currentText != "0" {
-            
-            numbersView.symbolLabel.text = sender.currentTitle!
-            numbersView.summaryValueLabel.text = pressHandler.calculate(symbol: sender.currentTitle!, currentText: currentText, secondText: secondText)
-            
+
+            symbolLabel.text = sender.currentTitle!
+            summaryLabel.text = pressHandler.calculate(symbol: sender.currentTitle!, currentText: currentText, secondText: secondText)
+
         }else if currentText != "0" {
+
+            symbolLabel.text = sender.currentTitle!
+            secondNumberLabel.text = firstNumberLabel.text!
+            firstNumberLabel.text! = "0"
+
+            deactivateButton(tag: ButtonTags.rightArrowButtonTag)
             
-            numbersView.symbolLabel.text = sender.currentTitle!
-            numbersView.secondValueLabel.text = numbersView.firstValueLabel.text!
-            numbersView.firstValueLabel.text! = "0"
-            
-            let bView = view.viewWithTag(3)
-            bView?.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
         }
     }
     
     //MARK: NumberPressed
     @objc func numberPressed(sender: UIButton) {
         generator.impactOccurred()
-        
-        let currentText = numbersView.firstValueLabel.text!
-        let secondText = numbersView.secondValueLabel.text!
-        let symbol = numbersView.symbolLabel.text!
+
+        let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
+        let currentText = firstNumberLabel.text!
+        let secondNumberLabel = view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
+        let secondText = secondNumberLabel.text!
+        let symbolLabel = view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
+        let symbol = symbolLabel.text!
         let buttonPressed = sender.currentTitle!
+        let summaryLabel = view.viewWithTag(LabelTags.summaryValueLabelTag) as! UILabel
 
         if currentText.count < 10 {
-            (numbersView.summaryValueLabel.text, numbersView.firstValueLabel.text) = pressHandler.handleNumberPress(currentText: currentText, secondText: secondText, symbol: symbol, buttonPressed: buttonPressed)
-            
-            if numbersView.secondValueLabel.text! != "" {
-                let bView = view.viewWithTag(1)
-                bView?.viewWithTag(1)?.backgroundColor = Colors.redColor.withAlphaComponent(1)
-            }
-            if numbersView.firstValueLabel.text != "0" {
-                let bView = view.viewWithTag(3)
-                bView?.backgroundColor = Colors.purpleColor.withAlphaComponent(1)
-                let cView = view.viewWithTag(4)
-                cView?.backgroundColor = Colors.purpleColor.withAlphaComponent(1)
+            (summaryLabel.text, firstNumberLabel.text) = pressHandler.handleNumberPress(currentText: currentText, secondText: secondText, symbol: symbol, buttonPressed: buttonPressed)
 
+            if secondNumberLabel.text! != "" {
+                activateButton(tag: ButtonTags.upArrowButtonTag)
             }
+            if firstNumberLabel.text != "0" {
+                activateButton(tag: ButtonTags.rightArrowButtonTag)
+                activateButton(tag: ButtonTags.cancelButtonTag)
+            }
+        }
+
+    }
+    
+    
+    //MARK: Push to history
+    func pushToHistory() {
+        
+        let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
+        let currentText = firstNumberLabel.text!
+        let secondNumberLabel = view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
+        let secondText = secondNumberLabel.text!
+        let summaryLabel = view.viewWithTag(LabelTags.summaryValueLabelTag) as! UILabel
+        let summaryText = summaryLabel.text!
+        let symbolLabel = view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
+        let symbol = symbolLabel.text!
+        let historyText = historyView.historyLabel.text!
+        let newLine = secondText + " " + symbol + " " + currentText + " = " + summaryText
+
+        historyView.historyLabel.text = historyText + "\n" + newLine
+        counter += 1
+        resetLabels(resetAll: false)
+
+    }
+    
+    //MARK: Reset Labels
+    func resetLabels(resetAll: Bool) {
+        
+        let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
+        let secondNumberLabel = view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
+        let summaryLabel = view.viewWithTag(LabelTags.summaryValueLabelTag) as! UILabel
+        let symbolLabel = view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
+
+        if resetAll == true {
+            
+            firstNumberLabel.text = "0"
+            secondNumberLabel.text = ""
+            summaryLabel.text = ""
+            symbolLabel.text = ""
+            //history here too
+            
+        }else{
+            
+            firstNumberLabel.text = "0"
+            secondNumberLabel.text = ""
+            summaryLabel.text = ""
+            symbolLabel.text = ""
+            
+        }
+    }
+    
+    func deactivateButton(tag: Int) {
+        let button = view.viewWithTag(tag) as! UIButton
+        button.isUserInteractionEnabled = false
+        if ButtonTags.upArrowButtonTag == tag {
+            button.backgroundColor = Colors.redColor.withAlphaComponent(Colors.inactiveAlpha)
+        }else if ButtonTags.dotButtonTag == tag {
+            button.backgroundColor = Colors.whiteColor.withAlphaComponent(Colors.inactiveAlpha)
+        }else{
+            button.backgroundColor = Colors.purpleColor.withAlphaComponent(Colors.inactiveAlpha)
+        }
+    }
+    
+    func activateButton(tag: Int) {
+        let button = view.viewWithTag(tag) as! UIButton
+        button.isUserInteractionEnabled = true
+        
+        if ButtonTags.upArrowButtonTag == tag {
+            button.backgroundColor = Colors.redColor.withAlphaComponent(Colors.activeAlpha)
+        }else if ButtonTags.dotButtonTag == tag {
+            button.backgroundColor = Colors.whiteColor.withAlphaComponent(Colors.activeAlpha)
+        }else{
+            button.backgroundColor = Colors.purpleColor.withAlphaComponent(Colors.activeAlpha)
         }
         
     }
     
+    
+    
     //MARK:- Setup
 
     
-    func setupNumbersView(view: UIView) {
+    func setupNumbersView(buttonView: UIView) {
+        
+        let numbersView = NumbersView(frame: view.frame)
         numbersView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(numbersView)
-        
         numbersView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive  = true
         numbersView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        numbersView.bottomAnchor.constraint(equalTo: view.topAnchor, constant: -5).isActive = true
-        numbersView.topAnchor.constraint(equalTo: numbersView.secondValueLabel.topAnchor).isActive = true
+        numbersView.bottomAnchor.constraint(equalTo: buttonView.topAnchor, constant: -10).isActive = true
+        numbersView.heightAnchor.constraint(equalToConstant: 200).isActive = true
 
-        setupHistoryView()
+        setupHistoryView(numbersView: numbersView)
         
     }
     
-    func setupHistoryView() {
+    func setupHistoryView(numbersView: UIView) {
         
         historyView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(historyView)
-        
         historyView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         historyView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive  = true
         historyView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        historyView.bottomAnchor.constraint(equalTo: numbersView.topAnchor, constant: -5).isActive = true
+        historyView.bottomAnchor.constraint(equalTo: numbersView.topAnchor, constant: -25).isActive = true
     }
     
 }

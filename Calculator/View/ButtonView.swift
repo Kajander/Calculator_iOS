@@ -8,14 +8,18 @@
 
 import UIKit
 
-class PortraitButtonView: UIView {
+class ButtonView: UIView {
     
     var buttonHeight = CGFloat()
     var buttonWidth = CGFloat()
-    var bottomConstant = CGFloat()
+    
     var fullHeigth = CGFloat()
+    var bottomConstant = CGFloat()
     var btnTrailConst = CGFloat()
+    var btnLeadConst = CGFloat()
     var btnBottConst = CGFloat()
+    var btnScientificBottomConst = CGFloat()
+    
     var fontSize = CGFloat(0)
     var cornerRadius = CGFloat(5)
     var padding = CGFloat(4.0)
@@ -51,19 +55,28 @@ class PortraitButtonView: UIView {
             buttonWidth = (width / 2) / 8
             btnTrailConst = -(buttonWidth + 2 * padding)
             btnBottConst = -(buttonHeight + padding)
+            
+            btnLeadConst = (buttonWidth + 2 * padding)
+            btnScientificBottomConst = -(buttonHeight + padding)
+            
             fontSize = 22
             createBasicButtons()
-            //createScientificButtons
+            createScientificButtons()
+            
+            
         }
         
         
         
         fullHeigth = 5 * buttonHeight + bottomConstant + (5 * padding)
+        heightAnchor.constraint(equalToConstant: fullHeigth).isActive = true
+        
+        
     }
     
     func createBasicButtons() {
         
-        for title in ButtonTites.portraitButtonTitles {
+        for title in ButtonTitles.basicTitles {
             if title.isInt {
                 let intTitle = Int(title)
                 let button = CustomButton(frame: CGRect.zero, title: title, fontSize: fontSize, color: Colors.whiteColor, width: buttonWidth, height: buttonHeight)
@@ -111,12 +124,14 @@ class PortraitButtonView: UIView {
                 case "-/+":
                     button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: btnTrailConst).isActive = true
                     button.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-                    button.backgroundColor = Colors.redColor.withAlphaComponent(1)
                 case "↥":
+                    button.tag = ButtonTags.upArrowButtonTag
+                    button.isUserInteractionEnabled = false
                     button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding).isActive = true
                     button.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-                    button.backgroundColor = Colors.redColor
+                    button.backgroundColor = Colors.redColor.withAlphaComponent(Colors.inactiveAlpha)
                 case ".":
+                    button.tag = ButtonTags.dotButtonTag
                     button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 2 * btnTrailConst + padding).isActive = true
                     button.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
                 case "+":
@@ -136,17 +151,23 @@ class PortraitButtonView: UIView {
                     button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 4 * btnBottConst).isActive = true
                     button.backgroundColor = Colors.greenColor
                 case "⇥":
+                    button.tag = ButtonTags.rightArrowButtonTag
+                    button.isUserInteractionEnabled = false
                     button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: btnTrailConst).isActive = true
                     button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 4 * btnBottConst).isActive = true
-                    button.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
+                    button.backgroundColor = Colors.purpleColor.withAlphaComponent(Colors.inactiveAlpha)
                 case "C":
+                    button.tag = ButtonTags.cancelButtonTag
+                    button.isUserInteractionEnabled = false
                     button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 2 * btnTrailConst + padding).isActive = true
                     button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 4 * btnBottConst).isActive = true
-                    button.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
+                    button.backgroundColor = Colors.purpleColor.withAlphaComponent(Colors.inactiveAlpha)
                 case "AC":
+                    button.tag = ButtonTags.cancelAllButtonTag
+                    button.isUserInteractionEnabled = false
                     button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 3 * btnTrailConst + 2 * padding).isActive = true
                     button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 4 * btnBottConst).isActive = true
-                    button.backgroundColor = Colors.purpleColor.withAlphaComponent(0.5)
+                    button.backgroundColor = Colors.purpleColor.withAlphaComponent(Colors.inactiveAlpha)
                 default:
                     print("More problems :S")
                 }
@@ -154,6 +175,71 @@ class PortraitButtonView: UIView {
             
         }
     }
+    
+    func createScientificButtons() {
+        
+        
+                 
+        for title in ButtonTitles.scientificTitles {
+            
+            let button = CustomButton(frame: CGRect.zero, title: title, fontSize: fontSize, color: Colors.whiteColor, width: buttonWidth, height: buttonHeight)
+            addSubview(button)
+            
+            
+            switch title {
+            case "a2":
+                button.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding).isActive = true
+                button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 4 * btnScientificBottomConst).isActive = true
+            case "ab":
+                button.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: btnLeadConst).isActive = true
+                button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 4 * btnScientificBottomConst).isActive = true
+            case "(":
+                button.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 2 * btnLeadConst - padding).isActive = true
+                button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 4 * btnScientificBottomConst).isActive = true
+            case ")":
+                button.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 3 * btnLeadConst - 2 * padding).isActive = true
+                button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 4 * btnScientificBottomConst).isActive = true
+            case "sin":
+                button.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding).isActive = true
+                button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 3 * btnScientificBottomConst).isActive = true
+            case "cos":
+                button.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: btnLeadConst).isActive = true
+                button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 3 * btnScientificBottomConst).isActive = true
+            case "tan":
+                button.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 2 * btnLeadConst - padding).isActive = true
+                button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 3 * btnScientificBottomConst).isActive = true
+            default:
+                print("Scientific probelms :S")
+            }
+            
+            
+//            if title == "a2" || title == "ab" {
+//
+//                let font:UIFont? = UIFont(name: "Helvetica", size:20)
+//                let fontSuper:UIFont? = UIFont(name: "Helvetica", size:10)
+//                let attString:NSMutableAttributedString = NSMutableAttributedString(string: title, attributes: [NSAttributedString.Key.font:font!])
+//                attString.setAttributes([NSAttributedString.Key.font:fontSuper!,NSAttributedString.Key.baselineOffset:10], range: NSRange(location:1,length:1))
+//
+//                let button = CustomButton(frame: CGRect.zero, title: "", fontSize: fontSize, color: Colors.whiteColor, width: buttonWidth, height: buttonHeight)
+//                button.translatesAutoresizingMaskIntoConstraints = false
+//                addSubview(button)
+//                button.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 50).isActive = true
+//                button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50).isActive = true
+//                button.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
+//                button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
+//
+//                button.setAttributedTitle(attString, for: .normal)
+//
+//            }
+            
+            
+            
+            
+            
+            
+        }
+    }
+
     
     /*
      // Only override draw() if you perform custom drawing.

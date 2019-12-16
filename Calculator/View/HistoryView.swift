@@ -24,8 +24,9 @@ class HistoryView: UIView {
     
     func setupView() {
         
-        historyLabel = HistoryLabel()
         
+        historyLabel = CustomLabel(frame: CGRect.zero, value: "", fontSize: 22, textColor: .lightGray, numOfLines: 10)
+        historyLabel.text = ""
         historyLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(historyLabel)
         historyLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5).isActive = true

@@ -15,17 +15,11 @@
 		EA1DE990239FD40400EA6356 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA1DE98E239FD40400EA6356 /* Main.storyboard */; };
 		EA1DE992239FD40500EA6356 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA1DE991239FD40500EA6356 /* Assets.xcassets */; };
 		EA1DE995239FD40500EA6356 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA1DE993239FD40500EA6356 /* LaunchScreen.storyboard */; };
-		EA9E2FA323A1571400876492 /* PortraitButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FA223A1571400876492 /* PortraitButtonView.swift */; };
+		EA64CF3423A5300000F9DA70 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64CF3323A5300000F9DA70 /* CustomLabel.swift */; };
+		EA9E2FA323A1571400876492 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FA223A1571400876492 /* ButtonView.swift */; };
 		EA9E2FA523A15AD600876492 /* PressHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FA423A15AD600876492 /* PressHandler.swift */; };
-		EA9E2FA823A16E7C00876492 /* FirstValueLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FA723A16E7C00876492 /* FirstValueLabel.swift */; };
-		EA9E2FAA23A178A400876492 /* SecondValueLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FA923A178A400876492 /* SecondValueLabel.swift */; };
-		EA9E2FAC23A181A500876492 /* SymbolLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FAB23A181A500876492 /* SymbolLabel.swift */; };
-		EA9E2FAE23A1821700876492 /* SummarySymbolLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FAD23A1821700876492 /* SummarySymbolLabel.swift */; };
-		EA9E2FB023A182A500876492 /* SummaryValueLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FAF23A182A500876492 /* SummaryValueLabel.swift */; };
 		EA9E2FB423A23B0600876492 /* NumbersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FB323A23B0600876492 /* NumbersView.swift */; };
 		EA9E2FB623A23F7E00876492 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FB523A23F7E00876492 /* HistoryView.swift */; };
-		EA9E2FB823A2405900876492 /* HistoryLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FB723A2405900876492 /* HistoryLabel.swift */; };
-		EAB6AD3B23A2C36400E9F138 /* LandscapeButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB6AD3A23A2C36400E9F138 /* LandscapeButtonView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,17 +33,11 @@
 		EA1DE991239FD40500EA6356 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA1DE994239FD40500EA6356 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EA1DE996239FD40500EA6356 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EA9E2FA223A1571400876492 /* PortraitButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitButtonView.swift; sourceTree = "<group>"; };
+		EA64CF3323A5300000F9DA70 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		EA9E2FA223A1571400876492 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		EA9E2FA423A15AD600876492 /* PressHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressHandler.swift; sourceTree = "<group>"; };
-		EA9E2FA723A16E7C00876492 /* FirstValueLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstValueLabel.swift; sourceTree = "<group>"; };
-		EA9E2FA923A178A400876492 /* SecondValueLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondValueLabel.swift; sourceTree = "<group>"; };
-		EA9E2FAB23A181A500876492 /* SymbolLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolLabel.swift; sourceTree = "<group>"; };
-		EA9E2FAD23A1821700876492 /* SummarySymbolLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummarySymbolLabel.swift; sourceTree = "<group>"; };
-		EA9E2FAF23A182A500876492 /* SummaryValueLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryValueLabel.swift; sourceTree = "<group>"; };
 		EA9E2FB323A23B0600876492 /* NumbersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumbersView.swift; sourceTree = "<group>"; };
 		EA9E2FB523A23F7E00876492 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
-		EA9E2FB723A2405900876492 /* HistoryLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryLabel.swift; sourceTree = "<group>"; };
-		EAB6AD3A23A2C36400E9F138 /* LandscapeButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeButtonView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,11 +70,11 @@
 		EA1DE987239FD40400EA6356 /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
-				EA9E2FB223A23AEE00876492 /* Button */,
-				EA9E2FB123A23AE300876492 /* View */,
-				EA9E2FA623A16E5F00876492 /* Label */,
 				EA1DE988239FD40400EA6356 /* AppDelegate.swift */,
 				EA1DE98A239FD40400EA6356 /* SceneDelegate.swift */,
+				EA9E2FB223A23AEE00876492 /* Button */,
+				EA9E2FA623A16E5F00876492 /* Label */,
+				EA9E2FB123A23AE300876492 /* View */,
 				EA1DE98C239FD40400EA6356 /* ViewController.swift */,
 				EA1DE98E239FD40400EA6356 /* Main.storyboard */,
 				EA1DE991239FD40500EA6356 /* Assets.xcassets */,
@@ -101,12 +89,7 @@
 		EA9E2FA623A16E5F00876492 /* Label */ = {
 			isa = PBXGroup;
 			children = (
-				EA9E2FA723A16E7C00876492 /* FirstValueLabel.swift */,
-				EA9E2FA923A178A400876492 /* SecondValueLabel.swift */,
-				EA9E2FAB23A181A500876492 /* SymbolLabel.swift */,
-				EA9E2FAD23A1821700876492 /* SummarySymbolLabel.swift */,
-				EA9E2FAF23A182A500876492 /* SummaryValueLabel.swift */,
-				EA9E2FB723A2405900876492 /* HistoryLabel.swift */,
+				EA64CF3323A5300000F9DA70 /* CustomLabel.swift */,
 			);
 			path = Label;
 			sourceTree = "<group>";
@@ -114,8 +97,7 @@
 		EA9E2FB123A23AE300876492 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				EA9E2FA223A1571400876492 /* PortraitButtonView.swift */,
-				EAB6AD3A23A2C36400E9F138 /* LandscapeButtonView.swift */,
+				EA9E2FA223A1571400876492 /* ButtonView.swift */,
 				EA9E2FB323A23B0600876492 /* NumbersView.swift */,
 				EA9E2FB523A23F7E00876492 /* HistoryView.swift */,
 			);
@@ -204,19 +186,13 @@
 				EA14EE8023A034E500E6DBCF /* Constants.swift in Sources */,
 				EA9E2FB423A23B0600876492 /* NumbersView.swift in Sources */,
 				EA1DE98D239FD40400EA6356 /* ViewController.swift in Sources */,
-				EA9E2FA323A1571400876492 /* PortraitButtonView.swift in Sources */,
+				EA9E2FA323A1571400876492 /* ButtonView.swift in Sources */,
 				EA1DE989239FD40400EA6356 /* AppDelegate.swift in Sources */,
+				EA64CF3423A5300000F9DA70 /* CustomLabel.swift in Sources */,
 				EA1DE98B239FD40400EA6356 /* SceneDelegate.swift in Sources */,
-				EAB6AD3B23A2C36400E9F138 /* LandscapeButtonView.swift in Sources */,
-				EA9E2FB023A182A500876492 /* SummaryValueLabel.swift in Sources */,
 				EA9E2FB623A23F7E00876492 /* HistoryView.swift in Sources */,
-				EA9E2FB823A2405900876492 /* HistoryLabel.swift in Sources */,
-				EA9E2FA823A16E7C00876492 /* FirstValueLabel.swift in Sources */,
-				EA9E2FAC23A181A500876492 /* SymbolLabel.swift in Sources */,
 				EA9E2FA523A15AD600876492 /* PressHandler.swift in Sources */,
 				EA14EE7E23A033EC00E6DBCF /* CustomButton.swift in Sources */,
-				EA9E2FAA23A178A400876492 /* SecondValueLabel.swift in Sources */,
-				EA9E2FAE23A1821700876492 /* SummarySymbolLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

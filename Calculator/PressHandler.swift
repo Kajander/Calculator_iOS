@@ -92,13 +92,6 @@ class PressHandler: NSObject {
         
     }
     
-    
-    
-    
-    
-    
-    
-    
     //MARK: HandleNumberPress
     func handleNumberPress(currentText: String, secondText: String, symbol: String, buttonPressed: String) -> (summary: String, firstString: String) {
         
@@ -150,3 +143,4 @@ class PressHandler: NSObject {
     
     
 }
+

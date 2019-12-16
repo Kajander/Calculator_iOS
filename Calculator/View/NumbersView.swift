@@ -16,7 +16,19 @@ class NumbersView: UIView {
     var summarySymbolLabel = UILabel()
     var summaryValueLabel = UILabel()
     
+    var fontSize = CGFloat(0)
+    var labelLeadConst = CGFloat()
+    var padding = CGFloat(5)
+    var labelHeight = CGFloat(0)
+    var symbolWidth = CGFloat()
+    
+    var width: CGFloat
+    var height : CGFloat
+    
     override init(frame: CGRect) {
+        self.width = frame.width
+        self.height = frame.height
+        
         super.init(frame: frame)
         setupView()
     }
@@ -26,67 +38,69 @@ class NumbersView: UIView {
     }
     
     func setupView() {
-        summarySymbolLabel = SummarySymbolLabel(frame: CGRect.zero, value: "=")
-        setupSummarySymbolLabelConstraints()
+                
+        if frame.height > frame.width {
+            fontSize = CGFloat(48)
+            //sumbolpadding + symbolwidth + padding
+            labelLeadConst = padding + 25
+            labelHeight = height / 20
+            symbolWidth = labelHeight
+            // create basic
+            // Do constraintconstants here. its stupid that they are hardcoded atm
+        }else{
+           fontSize = CGFloat(32)
+            // create scientific
+            
+        }
+       
         
-        summaryValueLabel = SummaryValueLabel(frame: CGRect.zero, value: "")
-        setupSummaryValueLabelConstraints()
-        
-        firstValueLabel = FirstValueLabel(frame: CGRect.zero, value: "0")
-        setupFirstLabelConstraints()
-        
-        secondValueLabel = SecondValueLabel(frame: CGRect.zero, value: "")
-        setupSecondLabelConstraints()
-        
-        symbolLabel = SymbolLabel(frame: CGRect.zero, value: "")
-        setupSymbolLabelConstraints()
+        for title in LabelTitles.tags {
+            
+            let label = CustomLabel(frame: CGRect.zero, value: title, fontSize: fontSize, textColor: .white, numOfLines: 1)
+            addSubview(label)
+            switch title {
+            case "1":
+                label.tag = LabelTags.firstValueLabelTag
+                label.text = "0"
+                label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: labelLeadConst).isActive = true
+                label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding).isActive = true
+                label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -labelHeight - 4 * padding).isActive = true
+            case "2":
+                label.tag = LabelTags.secondValueLabelTag
+                label.text = ""
+                label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: labelLeadConst).isActive = true
+                label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding).isActive = true
+                label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -( 2 * labelHeight -
+                    5 * -padding)).isActive = true
+            case "3":
+                label.tag = LabelTags.summaryValueLabelTag
+                label.text = ""
+                label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: labelLeadConst).isActive = true
+                label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding).isActive = true
+                label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -padding).isActive = true
+            case "4":
+                label.tag = LabelTags.summarySymbolLabelTag
+                label.text = "="
+                label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding).isActive = true
+                label.widthAnchor.constraint(equalToConstant: symbolWidth).isActive = true
+                label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -padding).isActive = true
+            case "5":
+                label.tag = LabelTags.symboLabelTag
+                label.text = ""
+                label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding).isActive = true
+                label.widthAnchor.constraint(equalToConstant: symbolWidth).isActive = true
+                label.heightAnchor.constraint(equalToConstant: labelHeight).isActive = true
+                label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -labelHeight - 4 * padding).isActive = true
+                
+            default:
+                print("Label problems :S")
+            }
+            label.heightAnchor.constraint(equalToConstant: labelHeight).isActive = true
+
+        }
         
         setupLine()
     }
-    
-    func setupSummarySymbolLabelConstraints() {
-        summarySymbolLabel.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(summarySymbolLabel)
-        summarySymbolLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
-        summarySymbolLabel.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        summarySymbolLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-    }
-    
-    func setupSummaryValueLabelConstraints() {
-        summaryValueLabel.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(summaryValueLabel)
-        summaryValueLabel.leadingAnchor.constraint(equalTo: summarySymbolLabel.trailingAnchor, constant: 5).isActive = true
-        summaryValueLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10).isActive = true
-        summaryValueLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-    }
-    
-    func setupFirstLabelConstraints() {
-        firstValueLabel.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(firstValueLabel)
-        firstValueLabel.leadingAnchor.constraint(equalTo: summarySymbolLabel.trailingAnchor, constant: 5).isActive = true
-        firstValueLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10).isActive = true
-        firstValueLabel.bottomAnchor.constraint(equalTo: summarySymbolLabel.topAnchor, constant: -5).isActive = true
-        
-    }
-    
-    func setupSecondLabelConstraints() {
-        secondValueLabel.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(secondValueLabel)
-        secondValueLabel.leadingAnchor.constraint(equalTo: summarySymbolLabel.trailingAnchor, constant: 5).isActive = true
-        secondValueLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10).isActive = true
-        secondValueLabel.bottomAnchor.constraint(equalTo: firstValueLabel.topAnchor, constant: -5).isActive = true
-    }
-    
-    
-    func setupSymbolLabelConstraints() {
-        symbolLabel.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(symbolLabel)
-        symbolLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
-        symbolLabel.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        symbolLabel.bottomAnchor.constraint(equalTo: firstValueLabel.bottomAnchor).isActive = true
-    }
-    
-    
     
     func setupLine(){
         let lineView = UIView()
@@ -94,9 +108,9 @@ class NumbersView: UIView {
         lineView.layer.cornerRadius = 2
         lineView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(lineView)
-        lineView.leadingAnchor.constraint(equalTo: self.summarySymbolLabel.trailingAnchor, constant: 5).isActive = true
+        lineView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5).isActive = true
         lineView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5).isActive = true
-        lineView.bottomAnchor.constraint(equalTo: self.summarySymbolLabel.topAnchor, constant: 0).isActive = true
+        lineView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -labelHeight - 2 * padding ).isActive = true
         lineView.heightAnchor.constraint(equalToConstant: 5).isActive = true
     }
     /*
