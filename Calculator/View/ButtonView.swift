@@ -40,17 +40,20 @@ class ButtonView: UIView {
     
     
     func setupView() {
+        tag = ViewTags.buttonViewTag
         
         if frame.height > frame.width {
+            // Portrait
             buttonHeight = (width / 5 - (2 * padding)) / 1.5
             buttonWidth = width / 4 - (1.2 * padding)
             // This should be more clear
             btnTrailConst = -(buttonWidth + 2 * padding)
             btnBottConst = -(buttonHeight + padding)
-            fontSize = 32
+            fontSize = FontSize.portraitButtonFontSize
             createBasicButtons()
             
         }else{
+            // Landscape
             buttonHeight = height / 10
             buttonWidth = (width / 2) / 8
             btnTrailConst = -(buttonWidth + 2 * padding)
@@ -58,19 +61,14 @@ class ButtonView: UIView {
             
             btnLeadConst = (buttonWidth + 2 * padding)
             btnScientificBottomConst = -(buttonHeight + padding)
-            
-            fontSize = 22
+
+            fontSize = FontSize.landscapeButtonFontSize
             createBasicButtons()
             createScientificButtons()
-            
-            
         }
-        
-        
-        
+
         fullHeigth = 5 * buttonHeight + bottomConstant + (5 * padding)
         heightAnchor.constraint(equalToConstant: fullHeigth).isActive = true
-        
         
     }
     
@@ -178,8 +176,11 @@ class ButtonView: UIView {
     
     func createScientificButtons() {
         
+        let font:UIFont? = UIFont.boldSystemFont(ofSize: fontSize)
+        let fontSuper:UIFont? = UIFont.boldSystemFont(ofSize: fontSize / 2)
         
-                 
+        
+        
         for title in ButtonTitles.scientificTitles {
             
             let button = CustomButton(frame: CGRect.zero, title: title, fontSize: fontSize, color: Colors.whiteColor, width: buttonWidth, height: buttonHeight)
@@ -188,9 +189,17 @@ class ButtonView: UIView {
             
             switch title {
             case "a2":
+                button.tag = ButtonTags.powerOfTwoTag
+                let attString:NSMutableAttributedString = NSMutableAttributedString(string: title, attributes: [NSAttributedString.Key.font:font!])
+                attString.setAttributes([NSAttributedString.Key.font:fontSuper!,NSAttributedString.Key.baselineOffset:10], range: NSRange(location:1,length:1))
+                button.setAttributedTitle(attString, for: .normal)
                 button.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding).isActive = true
                 button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 4 * btnScientificBottomConst).isActive = true
             case "ab":
+                button.tag = ButtonTags.powerOfBTag
+                let attString:NSMutableAttributedString = NSMutableAttributedString(string: title, attributes: [NSAttributedString.Key.font:font!])
+                attString.setAttributes([NSAttributedString.Key.font:fontSuper!,NSAttributedString.Key.baselineOffset:10], range: NSRange(location:1,length:1))
+                button.setAttributedTitle(attString, for: .normal)
                 button.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: btnLeadConst).isActive = true
                 button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 4 * btnScientificBottomConst).isActive = true
             case "(":
@@ -213,24 +222,6 @@ class ButtonView: UIView {
             }
             
             
-//            if title == "a2" || title == "ab" {
-//
-//                let font:UIFont? = UIFont(name: "Helvetica", size:20)
-//                let fontSuper:UIFont? = UIFont(name: "Helvetica", size:10)
-//                let attString:NSMutableAttributedString = NSMutableAttributedString(string: title, attributes: [NSAttributedString.Key.font:font!])
-//                attString.setAttributes([NSAttributedString.Key.font:fontSuper!,NSAttributedString.Key.baselineOffset:10], range: NSRange(location:1,length:1))
-//
-//                let button = CustomButton(frame: CGRect.zero, title: "", fontSize: fontSize, color: Colors.whiteColor, width: buttonWidth, height: buttonHeight)
-//                button.translatesAutoresizingMaskIntoConstraints = false
-//                addSubview(button)
-//                button.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 50).isActive = true
-//                button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50).isActive = true
-//                button.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
-//                button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
-//
-//                button.setAttributedTitle(attString, for: .normal)
-//
-//            }
             
             
             
@@ -239,7 +230,7 @@ class ButtonView: UIView {
             
         }
     }
-
+    
     
     /*
      // Only override draw() if you perform custom drawing.

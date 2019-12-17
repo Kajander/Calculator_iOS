@@ -31,9 +31,9 @@ struct LabelTitles {
 struct LabelTags {
     static let firstValueLabelTag = 31
     static let secondValueLabelTag = 32
-    static let summaryValueLabelTag = 33
+    static let resultValueLabelTag = 33
     
-    static let summarySymbolLabelTag = 34
+    static let resultSymbolLabelTag = 34
     static let symboLabelTag = 35
     
     static let historyLabelTag = 36
@@ -42,11 +42,26 @@ struct LabelTags {
 
 struct ButtonTags {
     
-    static let upArrowButtonTag = 1
-    static let dotButtonTag = 2
-    static let rightArrowButtonTag = 3
-    static let cancelButtonTag = 4
-    static let cancelAllButtonTag = 5
+    static let upArrowButtonTag = 1     // ↥
+    static let dotButtonTag = 2         // .
+    static let rightArrowButtonTag = 3  // ⇥
+    static let cancelButtonTag = 4      // C
+    static let cancelAllButtonTag = 5   // AC
     
+    static let powerOfTwoTag = 6        // a2
+    static let powerOfBTag = 7          // ab
 }
 
+struct ViewTags {
+    static let buttonViewTag = 60
+    static let numbersViewTag = 61
+    static let historyViewTag = 62
+}
+
+
+struct FontSize {
+    
+    static let portraitButtonFontSize = CGFloat(32)
+    static let landscapeButtonFontSize = CGFloat(22)
+    
+}

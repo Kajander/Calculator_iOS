@@ -16,10 +16,12 @@
 		EA1DE992239FD40500EA6356 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA1DE991239FD40500EA6356 /* Assets.xcassets */; };
 		EA1DE995239FD40500EA6356 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA1DE993239FD40500EA6356 /* LaunchScreen.storyboard */; };
 		EA64CF3423A5300000F9DA70 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64CF3323A5300000F9DA70 /* CustomLabel.swift */; };
+		EA760A7F23A7476C00DC7FE1 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA760A7E23A7476C00DC7FE1 /* Actions.swift */; };
 		EA9E2FA323A1571400876492 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FA223A1571400876492 /* ButtonView.swift */; };
 		EA9E2FA523A15AD600876492 /* PressHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FA423A15AD600876492 /* PressHandler.swift */; };
 		EA9E2FB423A23B0600876492 /* NumbersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FB323A23B0600876492 /* NumbersView.swift */; };
 		EA9E2FB623A23F7E00876492 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E2FB523A23F7E00876492 /* HistoryView.swift */; };
+		EADFE26423A8F50F00406D4A /* Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADFE26323A8F50F00406D4A /* Calculate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,10 +36,12 @@
 		EA1DE994239FD40500EA6356 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EA1DE996239FD40500EA6356 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA64CF3323A5300000F9DA70 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		EA760A7E23A7476C00DC7FE1 /* Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		EA9E2FA223A1571400876492 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		EA9E2FA423A15AD600876492 /* PressHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressHandler.swift; sourceTree = "<group>"; };
 		EA9E2FB323A23B0600876492 /* NumbersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumbersView.swift; sourceTree = "<group>"; };
 		EA9E2FB523A23F7E00876492 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		EADFE26323A8F50F00406D4A /* Calculate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,8 +84,10 @@
 				EA1DE991239FD40500EA6356 /* Assets.xcassets */,
 				EA1DE993239FD40500EA6356 /* LaunchScreen.storyboard */,
 				EA1DE996239FD40500EA6356 /* Info.plist */,
-				EA14EE7F23A034E500E6DBCF /* Constants.swift */,
 				EA9E2FA423A15AD600876492 /* PressHandler.swift */,
+				EA760A7E23A7476C00DC7FE1 /* Actions.swift */,
+				EADFE26323A8F50F00406D4A /* Calculate.swift */,
+				EA14EE7F23A034E500E6DBCF /* Constants.swift */,
 			);
 			path = Calculator;
 			sourceTree = "<group>";
@@ -183,11 +189,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EADFE26423A8F50F00406D4A /* Calculate.swift in Sources */,
 				EA14EE8023A034E500E6DBCF /* Constants.swift in Sources */,
 				EA9E2FB423A23B0600876492 /* NumbersView.swift in Sources */,
 				EA1DE98D239FD40400EA6356 /* ViewController.swift in Sources */,
 				EA9E2FA323A1571400876492 /* ButtonView.swift in Sources */,
 				EA1DE989239FD40400EA6356 /* AppDelegate.swift in Sources */,
+				EA760A7F23A7476C00DC7FE1 /* Actions.swift in Sources */,
 				EA64CF3423A5300000F9DA70 /* CustomLabel.swift in Sources */,
 				EA1DE98B239FD40400EA6356 /* SceneDelegate.swift in Sources */,
 				EA9E2FB623A23F7E00876492 /* HistoryView.swift in Sources */,

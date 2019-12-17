@@ -11,75 +11,93 @@ import UIKit
 class ViewController: UIViewController {
     
     let pressHandler = PressHandler()
-    let historyView = HistoryView()
+    let actions = Actions()
+    let calculate = Calculate()
     // Counter is for knowing the ammount of lines in historylabel (max 10 is allowed)
     var counter = Int()
     let generator = UIImpactFeedbackGenerator(style: .light)
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Colors.backgroundColor
-        checkOrientation(frame: view.frame)
+        setupButtons(frame: view.frame)
     }
     
-    func checkOrientation(frame: CGRect) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        let group = DispatchGroup()
         
-        if frame.height > frame.width {
-            setupPortraitView()
+        let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
+        let firstNumberText = firstNumberLabel.text
+        let secondNumberLabel = view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
+        let secondNumberText = secondNumberLabel.text
+        let symbolLabel = view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
+        let symbol = symbolLabel.text
+        let historyLabel = view.viewWithTag(LabelTags.historyLabelTag) as! UILabel
+        let historyText = historyLabel.text
+        
+        let btnViewToRemove = view.viewWithTag(ViewTags.buttonViewTag)!
+        btnViewToRemove.removeFromSuperview()
+        let numViewToRemove = view.viewWithTag(ViewTags.numbersViewTag)!
+        numViewToRemove.removeFromSuperview()
+        let hisViewToRemove = view.viewWithTag(ViewTags.historyViewTag)!
+        hisViewToRemove.removeFromSuperview()
+        view.layoutIfNeeded()
+        
+        // This if else stament is kept if needed in the future but both landscape and portrait do the same thing
+        // maybe animations or such
+        // ButtonView is created based on the frame sent to it
+        if UIDevice.current.orientation.isLandscape {
             
-        }else{
-            setupLandscapeView()
+            group.enter()
+            DispatchQueue.main.async {
+                self.setupButtons(frame: self.view.frame)
+                group.leave()
+            }
+            
+        }else {
+            group.enter()
+            DispatchQueue.main.async {
+                self.setupButtons(frame: self.view.frame)
+                group.leave()
+            }
         }
-    }
-    
-    
-    
-    func setupPortraitView() {
-        setupButtons(frame: view.frame)
+        
+        
+        //Set the proper values back
+        group.notify(queue: DispatchQueue.main) {
+
+            if firstNumberText != "0" {
+                let newFirstNumberLabel = self.view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
+                newFirstNumberLabel.text = firstNumberText
+                self.actions.activateButton(tag: ButtonTags.rightArrowButtonTag, view: self.view)
+                self.actions.activateButton(tag: ButtonTags.cancelButtonTag, view: self.view)
+                if secondNumberText != "" {
+
+                    let newSecondNumberLabel = self.view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
+                    newSecondNumberLabel.text = secondNumberText
+                    let newSymbolLabel = self.view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
+                    newSymbolLabel.text = symbol
+                    let newResultLabel = self.view.viewWithTag(LabelTags.resultValueLabelTag) as! UILabel
+                    newResultLabel.text = self.calculate.handler(symbol: symbol!, currentText: firstNumberText!, secondText: secondNumberText!)
+                    
+                    self.actions.activateButton(tag: ButtonTags.upArrowButtonTag, view: self.view)
+                }
+            }
+            
+            if historyText != "" {
+                let newHistoryLabel = self.view.viewWithTag(LabelTags.historyLabelTag) as! UILabel
+                newHistoryLabel.text = historyText
+                self.actions.activateButton(tag: ButtonTags.cancelAllButtonTag, view: self.view)
+            }
+            
+        }
+        
         
     }
     
-    
-    func setupLandscapeView() {
-        setupButtons(frame: view.frame)
-    }
-   
-//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-//        if UIDevice.current.orientation.isLandscape {
-//            print("Landscape")
-//
-//            let joo = view.viewWithTag(10)
-//            joo?.removeFromSuperview()
-//
-//            let test = LandscapeButtonView()
-//            test.translatesAutoresizingMaskIntoConstraints = false
-//            view.addSubview(test)
-//            test.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-//            test.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-//            test.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-//            test.heightAnchor.constraint(equalToConstant: view.frame.width / 3 * 2).isActive = true
-////            var buttonHeight = CGFloat()
-////            var buttonWidth = CGFloat()
-////            var fullHeigth = CGFloat()
-////            let bottomConstant = CGFloat(25)
-////            let cornerRadius = CGFloat(5)
-////            let padding = CGFloat(4.0)
-////            var width: CGFloat
-//
-//        } else {
-//            print("Portrait")
-//        }
-//    }
-    
-//    func changeTest() {
-//        setupButtons(frame: view.frame)
-//
-//    }
-
     func setupButtons(frame: CGRect) {
         
         let buttonView = ButtonView(frame: frame)
-        buttonView.tag = 10
         buttonView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(buttonView)
         buttonView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
@@ -109,10 +127,24 @@ class ViewController: UIViewController {
                     button.addTarget(self, action: #selector(cancelAllPressed(sender:)), for: .touchUpInside)
                 }else if title == "-/+" {
                     button.addTarget(self, action: #selector(negativePositivePressed(sender:)), for: .touchUpInside)
+                    
+                }else if title == "a2" {
+                    button.addTarget(self, action: #selector(exponentPressed(sender:)), for: .touchUpInside)
+                }else if title == "ab" {
+                    button.addTarget(self, action: #selector(exponentPressed(sender:)), for: .touchUpInside)
+                }else if title == "(" {
+                    button.addTarget(self, action: #selector(negativePositivePressed(sender:)), for: .touchUpInside)
+                }else if title == ")" {
+                    button.addTarget(self, action: #selector(negativePositivePressed(sender:)), for: .touchUpInside)
+                }else if title == "sin" {
+                    button.addTarget(self, action: #selector(negativePositivePressed(sender:)), for: .touchUpInside)
+                }else if title == "cos" {
+                    button.addTarget(self, action: #selector(negativePositivePressed(sender:)), for: .touchUpInside)
+                }else if title == "tan" {
+                    button.addTarget(self, action: #selector(negativePositivePressed(sender:)), for: .touchUpInside)
                 }
             }
         }
-        
         setupNumbersView(buttonView: buttonView)
         
     }
@@ -120,250 +152,71 @@ class ViewController: UIViewController {
     
     //MARK: Remove number
     @objc func removeNumber(sender: UIButton) {
-
-        let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
-        let currentText = firstNumberLabel.text!
-        let secondNumberLabel = view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
-        let secondText = secondNumberLabel.text!
-        let symbolLabel = view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
-        let symbol = symbolLabel.text!
+        generator.impactOccurred()
+        pressHandler.removePressed(view: view)
         
-        let summaryValueLabel = view.viewWithTag(LabelTags.summaryValueLabelTag) as! UILabel
-
-        if currentText != "0" {
-            generator.impactOccurred()
-
-            let (summary, firstString) = pressHandler.handleRemoveButton(currentText: currentText, secondText: secondText, symbol: symbol)
-            if secondText != ""{
-                summaryValueLabel.text = summary
-            }
-            firstNumberLabel.text = firstString
-            
-            if firstString == "0" {
-                    deactivateButton(tag: ButtonTags.rightArrowButtonTag)
-                if secondText != "" {
-                    deactivateButton(tag: ButtonTags.upArrowButtonTag)
-                }else{
-                    deactivateButton(tag: ButtonTags.cancelButtonTag)
-                }
-            }
-
-            if !firstString.contains(".") {
-                activateButton(tag: ButtonTags.dotButtonTag)
-            }
-        }
-
     }
     
     //MARK: CancelPressed
     @objc func cancelPressed(sender: UIButton) {
         generator.impactOccurred()
-
-        resetLabels(resetAll: false)
+        pressHandler.cancelPressed(view: view)
         
-        deactivateButton(tag: ButtonTags.upArrowButtonTag)
-        deactivateButton(tag: ButtonTags.rightArrowButtonTag)
-        deactivateButton(tag: ButtonTags.cancelButtonTag)
-        activateButton(tag: ButtonTags.dotButtonTag)
-
-
     }
     
     //MARK: CancelAllPressed
     @objc func cancelAllPressed(sender: UIButton) {
         generator.impactOccurred()
-
-        resetLabels(resetAll: true)
-        historyView.historyLabel.text = ""
+        pressHandler.cancelAllPressed(view: view)
         counter = 0
-
-        deactivateButton(tag: ButtonTags.upArrowButtonTag)
-        deactivateButton(tag: ButtonTags.rightArrowButtonTag)
-        deactivateButton(tag: ButtonTags.cancelButtonTag)
-        deactivateButton(tag: ButtonTags.cancelAllButtonTag)
-
+        
     }
-    
     
     //MARK: UpArrowPressed
     @objc func upArrowPressed(sender: UIButton) {
         generator.impactOccurred()
-        
-        pushToHistory()
-        
-        deactivateButton(tag: ButtonTags.upArrowButtonTag)
-        deactivateButton(tag: ButtonTags.rightArrowButtonTag)
-        deactivateButton(tag: ButtonTags.cancelButtonTag)
-        activateButton(tag: ButtonTags.cancelAllButtonTag)
-            
+        pressHandler.historyPressed(view: view)
+        counter += 1
     }
-
     
     //MARK: Negative Positive change
     @objc func negativePositivePressed(sender: UIButton) {
         generator.impactOccurred()
-
-        let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
-        let currentText = firstNumberLabel.text!
-
-        if currentText.contains("-") {
-            firstNumberLabel.text = String(currentText.dropFirst())
-        }else{
-            firstNumberLabel.text = "-" + currentText
-
-        }
-
+        pressHandler.negativePositivePressed(view: view)
+        
     }
-    
     
     //MARK: CommaPressed
     @objc func commaPressed(sender: UIButton) {
         generator.impactOccurred()
-
-        let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
-        let currentText = firstNumberLabel.text!
-
-        if !currentText.contains(".") {
-            let newText = currentText + ".0"
-            firstNumberLabel.text! = newText
-
-            deactivateButton(tag: ButtonTags.dotButtonTag)
-        }
-
+        pressHandler.commaPressed(view: view)
+        
     }
     
     //MARK: SymbolPressed
     @objc func symbolPressed(sender: UIButton) {
         generator.impactOccurred()
-
-        let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
-        let currentText = firstNumberLabel.text!
-        let secondNumberLabel = view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
-        let secondText = secondNumberLabel.text!
-        let symbolLabel = view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
-        let symbol = symbolLabel.text!
-        let summaryLabel = view.viewWithTag(LabelTags.summaryValueLabelTag) as! UILabel
+        pressHandler.symbolPressed(buttonPressed: sender.currentTitle!, view: view)
         
-        if symbol != "", currentText != "0" {
-
-            symbolLabel.text = sender.currentTitle!
-            summaryLabel.text = pressHandler.calculate(symbol: sender.currentTitle!, currentText: currentText, secondText: secondText)
-
-        }else if currentText != "0" {
-
-            symbolLabel.text = sender.currentTitle!
-            secondNumberLabel.text = firstNumberLabel.text!
-            firstNumberLabel.text! = "0"
-
-            deactivateButton(tag: ButtonTags.rightArrowButtonTag)
-            
-        }
     }
     
     //MARK: NumberPressed
     @objc func numberPressed(sender: UIButton) {
         generator.impactOccurred()
-
-        let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
-        let currentText = firstNumberLabel.text!
-        let secondNumberLabel = view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
-        let secondText = secondNumberLabel.text!
-        let symbolLabel = view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
-        let symbol = symbolLabel.text!
-        let buttonPressed = sender.currentTitle!
-        let summaryLabel = view.viewWithTag(LabelTags.summaryValueLabelTag) as! UILabel
-
-        if currentText.count < 10 {
-            (summaryLabel.text, firstNumberLabel.text) = pressHandler.handleNumberPress(currentText: currentText, secondText: secondText, symbol: symbol, buttonPressed: buttonPressed)
-
-            if secondNumberLabel.text! != "" {
-                activateButton(tag: ButtonTags.upArrowButtonTag)
-            }
-            if firstNumberLabel.text != "0" {
-                activateButton(tag: ButtonTags.rightArrowButtonTag)
-                activateButton(tag: ButtonTags.cancelButtonTag)
-            }
-        }
-
-    }
-    
-    
-    //MARK: Push to history
-    func pushToHistory() {
-        
-        let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
-        let currentText = firstNumberLabel.text!
-        let secondNumberLabel = view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
-        let secondText = secondNumberLabel.text!
-        let summaryLabel = view.viewWithTag(LabelTags.summaryValueLabelTag) as! UILabel
-        let summaryText = summaryLabel.text!
-        let symbolLabel = view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
-        let symbol = symbolLabel.text!
-        let historyText = historyView.historyLabel.text!
-        let newLine = secondText + " " + symbol + " " + currentText + " = " + summaryText
-
-        historyView.historyLabel.text = historyText + "\n" + newLine
-        counter += 1
-        resetLabels(resetAll: false)
-
-    }
-    
-    //MARK: Reset Labels
-    func resetLabels(resetAll: Bool) {
-        
-        let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
-        let secondNumberLabel = view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
-        let summaryLabel = view.viewWithTag(LabelTags.summaryValueLabelTag) as! UILabel
-        let symbolLabel = view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
-
-        if resetAll == true {
-            
-            firstNumberLabel.text = "0"
-            secondNumberLabel.text = ""
-            summaryLabel.text = ""
-            symbolLabel.text = ""
-            //history here too
-            
-        }else{
-            
-            firstNumberLabel.text = "0"
-            secondNumberLabel.text = ""
-            summaryLabel.text = ""
-            symbolLabel.text = ""
-            
-        }
-    }
-    
-    func deactivateButton(tag: Int) {
-        let button = view.viewWithTag(tag) as! UIButton
-        button.isUserInteractionEnabled = false
-        if ButtonTags.upArrowButtonTag == tag {
-            button.backgroundColor = Colors.redColor.withAlphaComponent(Colors.inactiveAlpha)
-        }else if ButtonTags.dotButtonTag == tag {
-            button.backgroundColor = Colors.whiteColor.withAlphaComponent(Colors.inactiveAlpha)
-        }else{
-            button.backgroundColor = Colors.purpleColor.withAlphaComponent(Colors.inactiveAlpha)
-        }
-    }
-    
-    func activateButton(tag: Int) {
-        let button = view.viewWithTag(tag) as! UIButton
-        button.isUserInteractionEnabled = true
-        
-        if ButtonTags.upArrowButtonTag == tag {
-            button.backgroundColor = Colors.redColor.withAlphaComponent(Colors.activeAlpha)
-        }else if ButtonTags.dotButtonTag == tag {
-            button.backgroundColor = Colors.whiteColor.withAlphaComponent(Colors.activeAlpha)
-        }else{
-            button.backgroundColor = Colors.purpleColor.withAlphaComponent(Colors.activeAlpha)
-        }
+        pressHandler.numberPressed(buttonPressed: sender.currentTitle!, view: view)
         
     }
     
+    //MARK: Exponent pressed
+    @objc func exponentPressed(sender: UIButton) {
+        generator.impactOccurred()
+        pressHandler.exponentPressed(buttonPressed: sender.currentTitle!, view: view)
+        
+    }
     
     
     //MARK:- Setup
-
+    
     
     func setupNumbersView(buttonView: UIView) {
         
@@ -373,20 +226,30 @@ class ViewController: UIViewController {
         numbersView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive  = true
         numbersView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         numbersView.bottomAnchor.constraint(equalTo: buttonView.topAnchor, constant: -10).isActive = true
-        numbersView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-
+        
         setupHistoryView(numbersView: numbersView)
         
     }
     
     func setupHistoryView(numbersView: UIView) {
         
+        let historyView = HistoryView(frame: view.frame)
         historyView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(historyView)
-        historyView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        historyView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive  = true
-        historyView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        historyView.bottomAnchor.constraint(equalTo: numbersView.topAnchor, constant: -25).isActive = true
+        historyView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10).isActive  = true
+        historyView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+        if view.frame.height > view.frame.width {
+            // Portrait
+            historyView.bottomAnchor.constraint(equalTo: numbersView.topAnchor, constant: -25).isActive = true
+            historyView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+
+        }else{
+            // Landscape
+            historyView.bottomAnchor.constraint(equalTo: numbersView.bottomAnchor, constant: 0).isActive = true
+            historyView.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -10).isActive = true
+
+        }
+        
     }
     
 }

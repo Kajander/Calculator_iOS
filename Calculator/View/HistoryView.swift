@@ -11,6 +11,7 @@ import UIKit
 class HistoryView: UIView {
     
     var historyLabel = UILabel()
+    var fontSize = CGFloat(0)
 
     override init(frame: CGRect) {
            super.init(frame: frame)
@@ -24,10 +25,19 @@ class HistoryView: UIView {
     
     func setupView() {
         
+        // if = Portrait, else = landscape
+        if frame.height > frame.width {
+            fontSize = CGFloat(22)
+            print("onks port")
+        }else{
+            fontSize = CGFloat(16)
+            print("onsk land")
+        }
         
-        historyLabel = CustomLabel(frame: CGRect.zero, value: "", fontSize: 22, textColor: .lightGray, numOfLines: 10)
+        tag = ViewTags.historyViewTag
+        historyLabel = CustomLabel(frame: CGRect.zero, value: "", fontSize: fontSize, textColor: .lightGray, numOfLines: 10)
         historyLabel.text = ""
-        historyLabel.translatesAutoresizingMaskIntoConstraints = false
+        historyLabel.tag = LabelTags.historyLabelTag
         addSubview(historyLabel)
         historyLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5).isActive = true
         historyLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5).isActive = true
