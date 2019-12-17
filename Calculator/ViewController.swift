@@ -26,14 +26,10 @@ class ViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         let group = DispatchGroup()
         
-        let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
-        let firstNumberText = firstNumberLabel.text
-        let secondNumberLabel = view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
-        let secondNumberText = secondNumberLabel.text
-        let symbolLabel = view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
-        let symbol = symbolLabel.text
-        let historyLabel = view.viewWithTag(LabelTags.historyLabelTag) as! UILabel
-        let historyText = historyLabel.text
+        let firstNumberText = actions.fetchFirstNumberText(view: view)
+        let secondNumberText = actions.fetchSecondNumberText(view: view)
+        let symbol = actions.fetchSymbolText(view: view)
+        let historyText = actions.fetchHistoryText(view: view)
         
         let btnViewToRemove = view.viewWithTag(ViewTags.buttonViewTag)!
         btnViewToRemove.removeFromSuperview()
@@ -62,7 +58,6 @@ class ViewController: UIViewController {
             }
         }
         
-        
         //Set the proper values back
         group.notify(queue: DispatchQueue.main) {
 
@@ -78,7 +73,7 @@ class ViewController: UIViewController {
                     let newSymbolLabel = self.view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
                     newSymbolLabel.text = symbol
                     let newResultLabel = self.view.viewWithTag(LabelTags.resultValueLabelTag) as! UILabel
-                    newResultLabel.text = self.calculate.handler(symbol: symbol!, currentText: firstNumberText!, secondText: secondNumberText!)
+                    newResultLabel.text = self.calculate.handler(symbol: symbol, currentText: firstNumberText, secondText: secondNumberText)
                     
                     self.actions.activateButton(tag: ButtonTags.upArrowButtonTag, view: self.view)
                 }
@@ -127,7 +122,6 @@ class ViewController: UIViewController {
                     button.addTarget(self, action: #selector(cancelAllPressed(sender:)), for: .touchUpInside)
                 }else if title == "-/+" {
                     button.addTarget(self, action: #selector(negativePositivePressed(sender:)), for: .touchUpInside)
-                    
                 }else if title == "a2" {
                     button.addTarget(self, action: #selector(exponentPressed(sender:)), for: .touchUpInside)
                 }else if title == "ab" {

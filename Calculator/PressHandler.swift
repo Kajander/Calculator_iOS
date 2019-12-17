@@ -11,20 +11,16 @@ import UIKit
 
 class PressHandler: NSObject {
     
-    static let sharedInstance = PressHandler()
     let actions = Actions()
     let calculate = Calculate()
     
     
     //MARK:- Remove pressed
     func removePressed(view: UIView) {
-        
         let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
         let currentText = firstNumberLabel.text!
-        let secondNumberLabel = view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
-        let secondText = secondNumberLabel.text!
-        let symbolLabel = view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
-        let symbol = symbolLabel.text!
+        let secondText = actions.fetchSecondNumberText(view: view)
+        let symbol = actions.fetchSymbolText(view: view)
         
         let resultLabel = view.viewWithTag(LabelTags.resultValueLabelTag) as! UILabel
         
@@ -118,10 +114,8 @@ class PressHandler: NSObject {
         
         let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
         let currentText = firstNumberLabel.text!
-        let secondNumberLabel = view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
-        let secondText = secondNumberLabel.text!
-        let symbolLabel = view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
-        let symbol = symbolLabel.text!
+        let secondText = actions.fetchSecondNumberText(view: view)
+        let symbol = actions.fetchSymbolText(view: view)
         let resultLabel = view.viewWithTag(LabelTags.resultValueLabelTag) as! UILabel
         
         let button = view.viewWithTag(ButtonTags.powerOfBTag) as? UIButton
@@ -182,7 +176,7 @@ class PressHandler: NSObject {
                 }
             }
             
-            if secondNumberLabel.text! != "" {
+            if secondText != "" {
                 actions.activateButton(tag: ButtonTags.upArrowButtonTag, view: view)
             }
             if firstNumberLabel.text != "0" {
@@ -221,14 +215,10 @@ class PressHandler: NSObject {
     //MARK: History pressed
     func historyPressed(view: UIView) {
         
-        let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
-        let currentText = firstNumberLabel.text!
-        let secondNumberLabel = view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
-        let secondText = secondNumberLabel.text!
-        let resultLabel = view.viewWithTag(LabelTags.resultValueLabelTag) as! UILabel
-        let resultText = resultLabel.text!
-        let symbolLabel = view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
-        let symbol = symbolLabel.text!
+        let currentText = actions.fetchFirstNumberText(view: view)
+        let secondText = actions.fetchSecondNumberText(view: view)
+        let resultText = actions.fetchResultValueText(view: view)
+        let symbol = actions.fetchSymbolText(view: view)
         let historyLabel = view.viewWithTag(LabelTags.historyLabelTag) as! UILabel
         let historyText = historyLabel.text!
         let newLine = secondText + " " + symbol + " " + currentText + " = " + resultText

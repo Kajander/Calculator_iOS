@@ -75,6 +75,41 @@ class Actions {
     }
     
     
+
+    //MARK: Fetch firstNumberLabel.text
+    func fetchFirstNumberText(view: UIView) -> String {
+        let label = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
+        let text = label.text ?? ""
+        return text
+    }
+    
+    //MARK: Fetch secondNumberLabel.text
+    func fetchSecondNumberText(view: UIView) -> String {
+        let label = view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
+        let text = label.text ?? ""
+        return text
+    }
+    
+    //MARK: Fetch resultValueLabel.text
+    func fetchResultValueText(view: UIView) -> String {
+        let label = view.viewWithTag(LabelTags.resultValueLabelTag) as! UILabel
+        let text = label.text ?? ""
+        return text
+    }
+    
+    //MARK: Fetch symbolLabel.text
+    func fetchSymbolText(view: UIView) -> String {
+        let label = view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
+        let text = label.text ?? ""
+        return text
+    }
+    
+    //MARK: Fetch historyLabel.text
+    func fetchHistoryText(view: UIView) -> String {
+        let label = view.viewWithTag(LabelTags.historyLabelTag) as! UILabel
+        let text = label.text ?? ""
+        return text
+    }
     
     
    

@@ -28,10 +28,8 @@ class HistoryView: UIView {
         // if = Portrait, else = landscape
         if frame.height > frame.width {
             fontSize = CGFloat(22)
-            print("onks port")
         }else{
             fontSize = CGFloat(16)
-            print("onsk land")
         }
         
         tag = ViewTags.historyViewTag
