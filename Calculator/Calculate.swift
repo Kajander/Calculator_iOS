@@ -11,10 +11,10 @@ import Foundation
 class Calculate {
     
     //MARK: Handler
-    func handler(symbol: String, currentText: String, secondText: String) -> String {
+    func handler(symbol: String, firstNumber: String, secondNumber: String) -> String {
         var result = Double()
-        let firstValue = Double(currentText) ?? 0.0
-        let secondValue = Double(secondText) ?? 0.0
+        let firstValue = Double(firstNumber) ?? 0.0
+        let secondValue = Double(secondNumber) ?? 0.0
         
         switch symbol {
         case "+":
@@ -34,12 +34,12 @@ class Calculate {
             
         }
         
-        return String(result)
-        
+        if result.isThisInt == true {
+            return String(Int(result))
+        }else{
+            return String(result)
+        }
     }
-    
-    
-    
     
     
     
@@ -80,4 +80,16 @@ class Calculate {
     }
     
     
+}
+
+extension String {
+    var isInteger: Bool { return Int(self) != nil }
+    var isFloat: Bool { return Float(self) != nil }
+    var isDouble: Bool { return Double(self) != nil }
+}
+
+extension FloatingPoint {
+    var isThisInt: Bool {
+        return floor(self) == self
+    }
 }

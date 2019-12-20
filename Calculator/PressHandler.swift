@@ -18,55 +18,55 @@ class PressHandler: NSObject {
     //MARK:- Remove pressed
     func removePressed(view: UIView) {
         let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
-        let currentText = firstNumberLabel.text!
-        let secondText = actions.fetchSecondNumberText(view: view)
-        let symbol = actions.fetchSymbolText(view: view)
+        let firstNumberString = firstNumberLabel.text!
+        let secondNumberString = actions.fetchSecondNumberText(view: view)
+        let symbolString = actions.fetchSymbolText(view: view)
         
         let resultLabel = view.viewWithTag(LabelTags.resultValueLabelTag) as! UILabel
         
         //TODO: Make this more clear
-        if currentText.contains(".") {
-            (resultLabel.text, firstNumberLabel.text) = removeComma(currentText: currentText, secondText: secondText, symbol: symbol)
-        }else if secondText == "" {
-            firstNumberLabel.text = dropFromString(currentText: currentText, dropAmmount: 1)
+        if firstNumberString.contains(".") {
+            (resultLabel.text, firstNumberLabel.text) = removeComma(firstNumberString: firstNumberString, secondNumberString: secondNumberString, symbolString: symbolString)
+        }else if secondNumberString == "" {
+            firstNumberLabel.text = dropFromString(currentText: firstNumberString, dropAmmount: 1)
         }else{
-            firstNumberLabel.text = dropFromString(currentText: currentText, dropAmmount: 1)
-            resultLabel.text = calculate.handler(symbol: symbol, currentText: firstNumberLabel.text!, secondText: secondText)
+            firstNumberLabel.text = dropFromString(currentText: firstNumberString, dropAmmount: 1)
+            resultLabel.text = calculate.handler(symbol: symbolString, firstNumber: firstNumberLabel.text!, secondNumber: secondNumberString)
         }
         
-        if currentText.count == 1 {
+        if firstNumberString.count == 1 {
             firstNumberLabel.text = "0"
             resultLabel.text = ""
             actions.deactivateButton(tag: ButtonTags.rightArrowButtonTag, view: view)
-            if secondText != "" {
+            if secondNumberString != "" {
                 actions.deactivateButton(tag: ButtonTags.upArrowButtonTag, view: view)
             }else{
                 actions.deactivateButton(tag: ButtonTags.cancelButtonTag, view: view)
             }
         }
         
-        if !currentText.contains(".") {
+        if !firstNumberString.contains(".") {
             actions.activateButton(tag: ButtonTags.dotButtonTag, view: view)
         }
     }
     
     
     //MARK: Remove comma
-    func removeComma(currentText: String, secondText: String, symbol: String) -> (result: String, firstString: String) {
+    func removeComma(firstNumberString: String, secondNumberString: String, symbolString: String) -> (result: String, firstString: String) {
         var result = String()
-        var firstString = String()
+        var newFirstString = String()
         
-        let comma = currentText.split(separator: ".")
+        let comma = firstNumberString.split(separator: ".")
         let slice = comma[1]
         
         if slice.count == 1 {
-            firstString = dropFromString(currentText: currentText, dropAmmount: 2)
-            result = calculate.handler(symbol: symbol, currentText: firstString, secondText: secondText)
+            newFirstString = dropFromString(currentText: firstNumberString, dropAmmount: 2)
+            result = calculate.handler(symbol: symbolString, firstNumber: newFirstString, secondNumber: secondNumberString)
         }else{
-            firstString = dropFromString(currentText: currentText, dropAmmount: 1)
-            result = calculate.handler(symbol: symbol, currentText: firstString, secondText: secondText)
+            newFirstString = dropFromString(currentText: firstNumberString, dropAmmount: 1)
+            result = calculate.handler(symbol: symbolString, firstNumber: newFirstString, secondNumber: secondNumberString)
         }
-        return (result: result, firstString: firstString)
+        return (result: result, firstString: newFirstString)
     }
     
     
@@ -84,12 +84,12 @@ class PressHandler: NSObject {
     func negativePositivePressed(view: UIView) {
         
         let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
-        let currentText = firstNumberLabel.text!
+        let firstNumberString = firstNumberLabel.text!
         
-        if currentText.contains("-") {
-            firstNumberLabel.text = String(currentText.dropFirst())
+        if firstNumberString.contains("-") {
+            firstNumberLabel.text = String(firstNumberString.dropFirst())
         }else{
-            firstNumberLabel.text = "-" + currentText
+            firstNumberLabel.text = "-" + firstNumberString
         }
     }
     
@@ -98,10 +98,10 @@ class PressHandler: NSObject {
     func commaPressed(view: UIView) {
         
         let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
-        let currentText = firstNumberLabel.text!
+        let firstNumberString = firstNumberLabel.text!
         
-        if !currentText.contains(".") {
-            let newText = currentText + ".0"
+        if !firstNumberString.contains(".") {
+            let newText = firstNumberString + ".0"
             firstNumberLabel.text! = newText
             
             actions.deactivateButton(tag: ButtonTags.dotButtonTag, view: view)
@@ -113,9 +113,9 @@ class PressHandler: NSObject {
     func numberPressed(buttonPressed: String, view: UIView) {
         
         let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
-        let currentText = firstNumberLabel.text!
-        let secondText = actions.fetchSecondNumberText(view: view)
-        let symbol = actions.fetchSymbolText(view: view)
+        let firstNumberString = firstNumberLabel.text!
+        let secondNumberString = actions.fetchSecondNumberText(view: view)
+        let symbolString = actions.fetchSymbolText(view: view)
         let resultLabel = view.viewWithTag(LabelTags.resultValueLabelTag) as! UILabel
         
         let button = view.viewWithTag(ButtonTags.powerOfBTag) as? UIButton
@@ -125,58 +125,58 @@ class PressHandler: NSObject {
             let font:UIFont? = UIFont.boldSystemFont(ofSize: FontSize.landscapeButtonFontSize)
             let fontSuper:UIFont? = UIFont.boldSystemFont(ofSize: FontSize.landscapeButtonFontSize / 2)
             
-            resultLabel.text = calculate.handler(symbol: "ab", currentText: currentText, secondText: buttonPressed)
+            resultLabel.text = calculate.handler(symbol: "ab", firstNumber: firstNumberString, secondNumber: buttonPressed)
             
             // This needs to be better. extension or separate function
-            let attString:NSMutableAttributedString = NSMutableAttributedString(string: currentText + buttonPressed, attributes: [NSAttributedString.Key.font:font!])
+            let attString:NSMutableAttributedString = NSMutableAttributedString(string: firstNumberString + buttonPressed, attributes: [NSAttributedString.Key.font:font!])
             attString.setAttributes([NSAttributedString.Key.font:fontSuper!,NSAttributedString.Key.baselineOffset:10], range: NSRange(location:1,length:1))
             firstNumberLabel.attributedText = attString
         }
         
         
-        if currentText.count < 10 {
+        if firstNumberString.count < 10 {
             
-            if currentText == "-0" {
-                firstNumberLabel.text = String(currentText.dropLast(1)) + buttonPressed
-                if secondText != "" {
-                    resultLabel.text = calculate.handler(symbol: symbol, currentText: firstNumberLabel.text!, secondText: secondText)
+            if firstNumberString == "-0" {
+                firstNumberLabel.text = String(firstNumberString.dropLast(1)) + buttonPressed
+                if secondNumberString != "" {
+                    resultLabel.text = calculate.handler(symbol: symbolString, firstNumber: firstNumberLabel.text!, secondNumber: secondNumberString)
                 }
-            }else if !currentText.contains(".0") {
+            }else if !firstNumberString.contains(".0") {
                 
-                if currentText != "0" {
-                    firstNumberLabel.text = currentText + buttonPressed
-                    if secondText != "" {
-                        resultLabel.text = calculate.handler(symbol: symbol, currentText: firstNumberLabel.text!, secondText: secondText)
+                if firstNumberString != "0" {
+                    firstNumberLabel.text = firstNumberString + buttonPressed
+                    if secondNumberString != "" {
+                        resultLabel.text = calculate.handler(symbol: symbolString, firstNumber: firstNumberLabel.text!, secondNumber: secondNumberString)
                     }
                 }else{
                     firstNumberLabel.text = buttonPressed
-                    if secondText != "" {
-                        resultLabel.text = calculate.handler(symbol: symbol, currentText: firstNumberLabel.text!, secondText: secondText)
+                    if secondNumberString != "" {
+                        resultLabel.text = calculate.handler(symbol: symbolString, firstNumber: firstNumberLabel.text!, secondNumber: secondNumberString)
                     }
                 }
                 
             }else{
-                let split = currentText.split(separator: ".")
+                let split = firstNumberString.split(separator: ".")
                 let splitCount = split[1]
                 if buttonPressed == "0" {
-                    firstNumberLabel.text = currentText + buttonPressed
-                    if secondText != "" {
-                        resultLabel.text = calculate.handler(symbol: symbol, currentText: firstNumberLabel.text!, secondText: secondText)
+                    firstNumberLabel.text = firstNumberString + buttonPressed
+                    if secondNumberString != "" {
+                        resultLabel.text = calculate.handler(symbol: symbolString, firstNumber: firstNumberLabel.text!, secondNumber: secondNumberString)
                     }
                 }else if splitCount.count > 1 {
-                    firstNumberLabel.text = currentText + buttonPressed
-                    if secondText != "" {
-                        resultLabel.text = calculate.handler(symbol: symbol, currentText: firstNumberLabel.text!, secondText: secondText)
+                    firstNumberLabel.text = firstNumberString + buttonPressed
+                    if secondNumberString != "" {
+                        resultLabel.text = calculate.handler(symbol: symbolString, firstNumber: firstNumberLabel.text!, secondNumber: secondNumberString)
                     }
                 }else{
-                    firstNumberLabel.text = dropFromString(currentText: currentText, dropAmmount: 1) + buttonPressed
-                    if secondText != "" {
-                        resultLabel.text = calculate.handler(symbol: symbol, currentText: firstNumberLabel.text!, secondText: secondText)
+                    firstNumberLabel.text = dropFromString(currentText: firstNumberString, dropAmmount: 1) + buttonPressed
+                    if secondNumberString != "" {
+                        resultLabel.text = calculate.handler(symbol: symbolString, firstNumber: firstNumberLabel.text!, secondNumber: secondNumberString)
                     }
                 }
             }
             
-            if secondText != "" {
+            if secondNumberString != "" {
                 actions.activateButton(tag: ButtonTags.upArrowButtonTag, view: view)
             }
             if firstNumberLabel.text != "0" {
@@ -191,17 +191,17 @@ class PressHandler: NSObject {
     func exponentPressed(buttonPressed: String, view: UIView) {
         
         let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
-        let currentText = firstNumberLabel.text!
-        let summaryLabel = view.viewWithTag(LabelTags.resultValueLabelTag) as! UILabel
+        let firstNumberString = firstNumberLabel.text!
+        let resultLabel = view.viewWithTag(LabelTags.resultValueLabelTag) as! UILabel
         
         
         if buttonPressed == "a2" {
-            summaryLabel.text = calculate.handler(symbol: buttonPressed, currentText: currentText, secondText: "")
+            resultLabel.text = calculate.handler(symbol: buttonPressed, firstNumber: firstNumberString, secondNumber: "")
             let font:UIFont? = UIFont.boldSystemFont(ofSize: FontSize.landscapeButtonFontSize)
             let fontSuper:UIFont? = UIFont.boldSystemFont(ofSize: FontSize.landscapeButtonFontSize / 2)
             
             // This needs to be solved out somehow..
-            let attString:NSMutableAttributedString = NSMutableAttributedString(string: currentText + currentText, attributes: [NSAttributedString.Key.font:font!])
+            let attString:NSMutableAttributedString = NSMutableAttributedString(string: firstNumberString + firstNumberString, attributes: [NSAttributedString.Key.font:font!])
             attString.setAttributes([NSAttributedString.Key.font:fontSuper!,NSAttributedString.Key.baselineOffset:10], range: NSRange(location:1,length:1))
             firstNumberLabel.attributedText = attString
         }else if buttonPressed == "ab" {
@@ -215,15 +215,15 @@ class PressHandler: NSObject {
     //MARK: History pressed
     func historyPressed(view: UIView) {
         
-        let currentText = actions.fetchFirstNumberText(view: view)
-        let secondText = actions.fetchSecondNumberText(view: view)
-        let resultText = actions.fetchResultValueText(view: view)
-        let symbol = actions.fetchSymbolText(view: view)
+        let firstNumberString = actions.fetchFirstNumberText(view: view)
+        let secondNumberString = actions.fetchSecondNumberText(view: view)
+        let resultString = actions.fetchResultValueText(view: view)
+        let symbolString = actions.fetchSymbolText(view: view)
         let historyLabel = view.viewWithTag(LabelTags.historyLabelTag) as! UILabel
-        let historyText = historyLabel.text!
-        let newLine = secondText + " " + symbol + " " + currentText + " = " + resultText
+        let historyString = historyLabel.text!
+        let newLine = secondNumberString + " " + symbolString + " " + firstNumberString + " = " + resultString
         
-        historyLabel.text = historyText + "\n" + newLine
+        historyLabel.text = historyString + "\n" + newLine
         actions.resetLabels(resetAll: false, view: view)
         
         actions.deactivateButton(tag: ButtonTags.upArrowButtonTag, view: view)
@@ -272,12 +272,12 @@ class PressHandler: NSObject {
     func symbolPressed(buttonPressed: String, view: UIView) {
         
         let firstNumberLabel = view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
-        let currentText = firstNumberLabel.text!
+        let firstNumberString = firstNumberLabel.text!
         let secondNumberLabel = view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
-        let secondText = secondNumberLabel.text!
+        let secondNumberString = secondNumberLabel.text!
         let symbolLabel = view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
         
-        if currentText != "0", secondText == "" {
+        if firstNumberString != "0", secondNumberString == "" {
             
             symbolLabel.text = buttonPressed
             secondNumberLabel.text = firstNumberLabel.text!

@@ -75,7 +75,7 @@ class ButtonView: UIView {
     func createBasicButtons() {
         
         for title in ButtonTitles.basicTitles {
-            if title.isInt {
+            if title.isInteger {
                 let intTitle = Int(title)
                 let button = CustomButton(frame: CGRect.zero, title: title, fontSize: fontSize, color: Colors.whiteColor, width: buttonWidth, height: buttonHeight)
                 addSubview(button)

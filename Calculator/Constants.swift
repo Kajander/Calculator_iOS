@@ -20,7 +20,7 @@ struct Colors {
 }
 
 struct ButtonTitles {
-    static let basicTitles = ["0", "1" ,"2" ,"3" ,"4" ,"5" ,"6" ,"7" ,"8" ,"9" ,"-/+", "↥" , ".", "+", "-", "x", "÷", "÷", "⇥", "C", "AC"]
+    static let basicTitles = ["0", "1" ,"2" ,"3" ,"4" ,"5" ,"6" ,"7" ,"8" ,"9" ,"-/+", "↥" , ".", "+", "-", "x", "÷", "⇥", "C", "AC"]
     // More coming
     static let scientificTitles = ["a2", "ab", "(", ")", "sin", "cos", "tan"]
 }

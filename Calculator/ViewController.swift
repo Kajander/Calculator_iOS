@@ -26,10 +26,10 @@ class ViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         let group = DispatchGroup()
         
-        let firstNumberText = actions.fetchFirstNumberText(view: view)
-        let secondNumberText = actions.fetchSecondNumberText(view: view)
+        let firstNumberString = actions.fetchFirstNumberText(view: view)
+        let secondNumberString = actions.fetchSecondNumberText(view: view)
         let symbol = actions.fetchSymbolText(view: view)
-        let historyText = actions.fetchHistoryText(view: view)
+        let historyString = actions.fetchHistoryText(view: view)
         
         let btnViewToRemove = view.viewWithTag(ViewTags.buttonViewTag)!
         btnViewToRemove.removeFromSuperview()
@@ -61,27 +61,27 @@ class ViewController: UIViewController {
         //Set the proper values back
         group.notify(queue: DispatchQueue.main) {
 
-            if firstNumberText != "0" {
+            if firstNumberString != "0" {
                 let newFirstNumberLabel = self.view.viewWithTag(LabelTags.firstValueLabelTag) as! UILabel
-                newFirstNumberLabel.text = firstNumberText
+                newFirstNumberLabel.text = firstNumberString
                 self.actions.activateButton(tag: ButtonTags.rightArrowButtonTag, view: self.view)
                 self.actions.activateButton(tag: ButtonTags.cancelButtonTag, view: self.view)
-                if secondNumberText != "" {
+                if secondNumberString != "" {
 
                     let newSecondNumberLabel = self.view.viewWithTag(LabelTags.secondValueLabelTag) as! UILabel
-                    newSecondNumberLabel.text = secondNumberText
+                    newSecondNumberLabel.text = secondNumberString
                     let newSymbolLabel = self.view.viewWithTag(LabelTags.symboLabelTag) as! UILabel
                     newSymbolLabel.text = symbol
                     let newResultLabel = self.view.viewWithTag(LabelTags.resultValueLabelTag) as! UILabel
-                    newResultLabel.text = self.calculate.handler(symbol: symbol, currentText: firstNumberText, secondText: secondNumberText)
+                    newResultLabel.text = self.calculate.handler(symbol: symbol, firstNumber: firstNumberString, secondNumber: secondNumberString)
                     
                     self.actions.activateButton(tag: ButtonTags.upArrowButtonTag, view: self.view)
                 }
             }
             
-            if historyText != "" {
+            if historyString != "" {
                 let newHistoryLabel = self.view.viewWithTag(LabelTags.historyLabelTag) as! UILabel
-                newHistoryLabel.text = historyText
+                newHistoryLabel.text = historyString
                 self.actions.activateButton(tag: ButtonTags.cancelAllButtonTag, view: self.view)
             }
             
@@ -104,7 +104,7 @@ class ViewController: UIViewController {
             let button = view as! UIButton
             let title = button.currentTitle!
             
-            if title.isInt == true {
+            if title.isInteger == true {
                 button.addTarget(self, action: #selector(numberPressed(sender:)), for: .touchUpInside)
             }else{
                 
@@ -248,8 +248,3 @@ class ViewController: UIViewController {
     
 }
 
-extension String {
-    var isInt: Bool {
-        return Int(self) != nil
-    }
-}
