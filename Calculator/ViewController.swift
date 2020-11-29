@@ -21,6 +21,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = Colors.backgroundColor
         setupButtons(frame: view.frame)
+        
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

@@ -78,8 +78,6 @@ class PressHandler: NSObject {
     }
     
     
-    
-    
     //MARK: Negative or positive pressed
     func negativePositivePressed(view: UIView) {
         
@@ -187,6 +185,7 @@ class PressHandler: NSObject {
         
     }
     
+    
     //MARK: Exponent pressed
     func exponentPressed(buttonPressed: String, view: UIView) {
         
@@ -209,7 +208,6 @@ class PressHandler: NSObject {
         }
         
     }
-    
     
     
     //MARK: History pressed
@@ -264,10 +262,7 @@ class PressHandler: NSObject {
         
     }
     
-    
-    
-    
-    
+        
     //MARK: Symbol pressed
     func symbolPressed(buttonPressed: String, view: UIView) {
         
